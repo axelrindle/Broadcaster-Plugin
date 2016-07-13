@@ -1,0 +1,39 @@
+name: Broadcaster
+version: 1.8.0
+main: de.lalo5.broadcaster.Broadcaster
+author: lalo5
+website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
+commands:
+     brc:
+          description: Control's the Plugin
+          usage: /<command>
+permissions:
+    broadcaster.admin:
+        default: op
+        description: Permission for all Commands
+        children:
+            broadcaster.brc: true
+            broadcaster.start: true
+            broadcaster.stop: true
+            broadcaster.reload: true
+            broadcaster.bc: true
+        broadcaster.brc:
+            default: true
+            description: Main Command
+        broadcaster.start:
+            default: false
+            description: Start Command
+        broadcaster.stop:
+            default: false
+            description: Stop Command
+        broadcaster.reload:
+            default: false
+            description: Reload Command
+    broadcaster.user:
+        default: true
+        description: Permission for User
+        children:
+            broadcaster.brc: true
+        broadcaster.brc:
+            default: true
+            description: Main Command
