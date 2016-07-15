@@ -54,7 +54,7 @@ public class UpdateChecker {
     private Thread thread; // Updater thread
 
     private int id = 49029; // Project's Curse ID
-    private String apiKey = "752c0f2766d2a81c62c049b0d8700a443f158aba"; // BukkitDev ServerMods API key
+    private String apiKey = "yourApiKey"; // BukkitDev ServerMods API key
     private static final String TITLE_VALUE = "name"; // Gets remote file's title
     private static final String LINK_VALUE = "downloadUrl"; // Gets remote file's download link
     private static final String TYPE_VALUE = "releaseType"; // Gets remote file's release type
@@ -483,27 +483,27 @@ public class UpdateChecker {
 
     /**
 * <b>If you wish to run mathematical versioning checks, edit this method.</b>
-* <p>
+* <br>
 * With default behavior, Updater will NOT verify that a remote version available on BukkitDev
 * which is not this version is indeed an "update".
 * If a version is present on BukkitDev that is not the version that is currently running,
 * Updater will assume that it is a newer version.
 * This is because there is no standard versioning scheme, and creating a calculation that can
 * determine whether a new update is actually an update is sometimes extremely complicated.
-* </p>
-* <p>
+* <br>
+* <br>
 * Updater will call this method from {@link #versionCheck(String)} before deciding whether
 * the remote version is actually an update.
 * If you have a specific versioning scheme with which a mathematical determination can
 * be reliably made to decide whether one version is higher than another, you may
 * revise this method, using the local and remote version parameters, to execute the
 * appropriate check.
-* </p>
-* <p>
+* <br>
+* <br>
 * Returning a value of <b>false</b> will tell the update process that this is NOT a new version.
 * Without revision, this method will always consider a remote version at all different from
 * that of the local version a new update.
-* </p>
+* <br>
 * @param localVersion the current version
 * @param remoteVersion the remote version
 * @return true if Updater should consider the remote version an update, false if not.
