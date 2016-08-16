@@ -38,7 +38,8 @@ import org.json.simple.JSONValue;
 * @version 2.1
 */
 
-public class UpdateChecker {
+@SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
+class UpdateChecker {
 
     private Plugin plugin;
     private UpdateType type;
@@ -63,17 +64,16 @@ public class UpdateChecker {
     private static final String HOST = "https://api.curseforge.com"; // Slugs will be appended to this to get to the project's RSS feed
 
     private static final String USER_AGENT = "Updater (by Gravity)";
-    private static final String delimiter = "^v|[\\s_-]v"; // Used for locating version numbers in file names
-    private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the version number contains one of these, don't update.
+    private static final String delimiter = "^v|[\\s_-]v"; // Used for locating updateVersion numbers in file names
+    private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the updateVersion number contains one of these, don't update.
     private static final int BYTE_SIZE = 1024; // Used for downloading files
-    private final YamlConfiguration config = new YamlConfiguration(); // Config file
     private String updateFolder;// The folder that downloads will be placed in
     private UpdateChecker.UpdateResult result = UpdateChecker.UpdateResult.SUCCESS; // Used for determining the outcome of the update process
 
     /**
 * Gives the developer the result of the update process. Can be obtained by called {@link #getResult()}
 */
-    public enum UpdateResult {
+    enum UpdateResult {
         /**
 * The updater found an update, and has readied it to be loaded the next time the server restarts/reloads.
 */
@@ -95,7 +95,7 @@ public class UpdateChecker {
 */
         FAIL_DBO,
         /**
-* When running the version check, the file on DBO did not contain a recognizable version.
+* When running the updateVersion check, the file on DBO did not contain a recognizable updateVersion.
 */
         FAIL_NOVERSION,
         /**
@@ -113,19 +113,19 @@ public class UpdateChecker {
     }
 
     /**
-* Allows the developer to specify the type of update that will be run.
+* Allows the developer to specify the updateType of update that will be run.
 */
-    public enum UpdateType {
+    enum UpdateType {
         /**
-* Run a version check, and then if the file is out of date, download the newest version.
+* Run a updateVersion check, and then if the file is out of date, download the newest updateVersion.
 */
         DEFAULT,
         /**
-* Don't run a version check, just find the latest update and download it.
+* Don't run a updateVersion check, just find the latest update and download it.
 */
         NO_VERSION_CHECK,
         /**
-* Get information about the version and the download size, but don't actually download anything.
+* Get information about the updateVersion and the download size, but don't actually download anything.
 */
         NO_DOWNLOAD
     }
@@ -133,7 +133,7 @@ public class UpdateChecker {
     /**
 * Represents the various release types of a file on BukkitDev.
 */
-    public enum ReleaseType {
+    enum ReleaseType {
         /**
 * An "alpha" file.
 */
@@ -154,10 +154,10 @@ public class UpdateChecker {
 * @param plugin The plugin that is checking for an update.
 * @param id The dev.bukkit.org id of the project.
 * @param file The file that the plugin is running from, get this by doing this.getFile() from within your main class.
-* @param type Specify the type of update this will be. See {@link UpdateType}
+* @param type Specify the updateType of update this will be. See {@link UpdateType}
 * @param announce True if the program should announce the progress of new updates in console.
 */
-    public UpdateChecker(Plugin plugin, int id, File file, UpdateType type, boolean announce) {
+    UpdateChecker(Plugin plugin, int id, File file, UpdateType type, boolean announce) {
         this.plugin = plugin;
         this.type = type;
         this.announce = announce;
@@ -169,11 +169,12 @@ public class UpdateChecker {
         final File updaterFile = new File(pluginFile, "Updater");
         final File updaterConfigFile = new File(updaterFile, "config.yml");
 
-        this.config.options().header("This configuration file affects all plugins using the Updater system (version 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
+        YamlConfiguration config = new YamlConfiguration();
+        config.options().header("This configuration file affects all plugins using the Updater system (updateVersion 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
                 + "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
                 + "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
-        this.config.addDefault("api-key", "752c0f2766d2a81c62c049b0d8700a443f158aba");
-        this.config.addDefault("disable", false);
+        config.addDefault("api-key", "api-key");
+        config.addDefault("disable", false);
 
         if (!updaterFile.exists()) {
             updaterFile.mkdir();
@@ -183,10 +184,10 @@ public class UpdateChecker {
         try {
             if (createFile) {
                 updaterConfigFile.createNewFile();
-                this.config.options().copyDefaults(true);
-                this.config.save(updaterConfigFile);
+                config.options().copyDefaults(true);
+                config.save(updaterConfigFile);
             } else {
-                this.config.load(updaterConfigFile);
+                config.load(updaterConfigFile);
             }
         } catch (final Exception e) {
             if (createFile) {
@@ -197,13 +198,13 @@ public class UpdateChecker {
             plugin.getLogger().log(Level.SEVERE, null, e);
         }
 
-        if (this.config.getBoolean("disable")) {
+        if (config.getBoolean("disable")) {
             this.result = UpdateResult.DISABLED;
             return;
         }
 
-        String key = this.config.getString("api-key");
-        if (key.equalsIgnoreCase("752c0f2766d2a81c62c049b0d8700a443f158aba") || key.equals("")) {
+        String key = config.getString("api-key");
+        if (key.equalsIgnoreCase("api-key") || key.equals("")) {
             key = null;
         }
 
@@ -226,18 +227,18 @@ public class UpdateChecker {
 * @return result of the update process.
 * @see UpdateResult
 */
-    public UpdateChecker.UpdateResult getResult() {
+    UpdateChecker.UpdateResult getResult() {
         this.waitForThread();
         return this.result;
     }
 
     /**
-* Get the latest version's release type.
+* Get the latest updateVersion's release updateType.
 *
-* @return latest version's release type.
+* @return latest updateVersion's release updateType.
 * @see ReleaseType
 */
-    public ReleaseType getLatestType() {
+    ReleaseType getLatestType() {
         this.waitForThread();
         if (this.versionType != null) {
             for (ReleaseType type : ReleaseType.values()) {
@@ -250,31 +251,31 @@ public class UpdateChecker {
     }
 
     /**
-* Get the latest version's game version (such as "CB 1.2.5-R1.0").
+* Get the latest updateVersion's game updateVersion (such as "CB 1.2.5-R1.0").
 *
-* @return latest version's game version.
+* @return latest updateVersion's game updateVersion.
 */
-    public String getLatestGameVersion() {
+    String getLatestGameVersion() {
         this.waitForThread();
         return this.versionGameVersion;
     }
 
     /**
-* Get the latest version's name (such as "Project v1.0").
+* Get the latest updateVersion's updateName (such as "Project v1.0").
 *
-* @return latest version's name.
+* @return latest updateVersion's updateName.
 */
-    public String getLatestName() {
+    String getLatestName() {
         this.waitForThread();
         return this.versionName;
     }
 
     /**
-* Get the latest version's direct file link.
+* Get the latest updateVersion's direct file updateLink.
 *
-* @return latest version's file link.
+* @return latest updateVersion's file updateLink.
 */
-    public String getLatestFileLink() {
+    String getLatestFileLink() {
         this.waitForThread();
         return this.versionLink;
     }
@@ -297,7 +298,7 @@ public class UpdateChecker {
 * Save an update from dev.bukkit.org into the server's update folder.
 *
 * @param folder the updates folder location.
-* @param file the name of the file to save it as.
+* @param file the updateName of the file to save it as.
 * @param link the url of the file.
 */
     private void saveFile(File folder, String file, String link) {
@@ -353,7 +354,7 @@ public class UpdateChecker {
                 if (fout != null) {
                     fout.close();
                 }
-            } catch (final Exception ex) {
+            } catch (final Exception ignored) {
             }
         }
     }
@@ -373,9 +374,7 @@ public class UpdateChecker {
                 ZipEntry entry = e.nextElement();
                 File destinationFilePath = new File(zipPath, entry.getName());
                 destinationFilePath.getParentFile().mkdirs();
-                if (entry.isDirectory()) {
-                    continue;
-                } else {
+                if (!entry.isDirectory()) {
                     final BufferedInputStream bis = new BufferedInputStream(zipFile.getInputStream(entry));
                     int b;
                     final byte buffer[] = new byte[UpdateChecker.BYTE_SIZE];
@@ -392,12 +391,8 @@ public class UpdateChecker {
                         destinationFilePath.renameTo(new File(this.plugin.getDataFolder().getParent(), this.updateFolder + File.separator + name));
                     }
                 }
-                entry = null;
-                destinationFilePath = null;
             }
-            e = null;
             zipFile.close();
-            zipFile = null;
 
             // Move any plugin data folders that were included to the right place, Bukkit won't do this for us.
             for (final File dFile : new File(zipPath).listFiles()) {
@@ -437,9 +432,9 @@ public class UpdateChecker {
     }
 
     /**
-* Check if the name of a jar is one of the plugins currently installed, used for extracting the correct files out of a zip.
+* Check if the updateName of a jar is one of the plugins currently installed, used for extracting the correct files out of a zip.
 *
-* @param name a name to check for inside the plugins folder.
+* @param name a updateName to check for inside the plugins folder.
 * @return true if a file inside the plugins folder is named this.
 */
     private boolean pluginFile(String name) {
@@ -455,21 +450,21 @@ public class UpdateChecker {
 * Check to see if the program should continue by evaluating whether the plugin is already updated, or shouldn't be updated.
 *
 * @param title the plugin's title.
-* @return true if the version was located and is not the same as the remote's newest.
+* @return true if the updateVersion was located and is not the same as the remote's newest.
 */
     private boolean versionCheck(String title) {
         if (this.type != UpdateType.NO_VERSION_CHECK) {
             final String localVersion = this.plugin.getDescription().getVersion();
             if (title.split(delimiter).length == 2) {
-                final String remoteVersion = title.split(delimiter)[1].split(" ")[0]; // Get the newest file's version number
+                final String remoteVersion = title.split(delimiter)[1].split(" ")[0]; // Get the newest file's updateVersion number
 
                 if (this.hasTag(localVersion) || !this.shouldUpdate(localVersion, remoteVersion)) {
-                    // We already have the latest version, or this build is tagged for no-update
+                    // We already have the latest updateVersion, or this build is tagged for no-update
                     this.result = UpdateChecker.UpdateResult.NO_UPDATE;
                     return false;
                 }
             } else {
-                // The file's name did not contain the string 'vVersion'
+                // The file's updateName did not contain the string 'vVersion'
                 final String authorInfo = this.plugin.getDescription().getAuthors().size() == 0 ? "" : " (" + this.plugin.getDescription().getAuthors().get(0) + ")";
                 this.plugin.getLogger().warning("The author of this plugin" + authorInfo + " has misconfigured their Auto Update system");
                 this.plugin.getLogger().warning("File versions should follow the format 'PluginName vVERSION'");
@@ -488,15 +483,20 @@ public class UpdateChecker {
 * which is not this version is indeed an "update".
 * If a version is present on BukkitDev that is not the version that is currently running,
 * Updater will assume that it is a newer version.
+* <p>
+* With default behavior, Updater will NOT verify that a remote updateVersion available on BukkitDev
+* which is not this updateVersion is indeed an "update".
+* If a updateVersion is present on BukkitDev that is not the updateVersion that is currently running,
+* Updater will assume that it is a newer updateVersion.
 * This is because there is no standard versioning scheme, and creating a calculation that can
 * determine whether a new update is actually an update is sometimes extremely complicated.
 * <br>
 * <br>
 * Updater will call this method from {@link #versionCheck(String)} before deciding whether
-* the remote version is actually an update.
+* the remote updateVersion is actually an update.
 * If you have a specific versioning scheme with which a mathematical determination can
-* be reliably made to decide whether one version is higher than another, you may
-* revise this method, using the local and remote version parameters, to execute the
+* be reliably made to decide whether one updateVersion is higher than another, you may
+* revise this method, using the local and remote updateVersion parameters, to execute the
 * appropriate check.
 * <br>
 * <br>
@@ -507,15 +507,24 @@ public class UpdateChecker {
 * @param localVersion the current version
 * @param remoteVersion the remote version
 * @return true if Updater should consider the remote version an update, false if not.
+* </p>
+* <p>
+* Returning a value of <b>false</b> will tell the update process that this is NOT a new updateVersion.
+* Without revision, this method will always consider a remote updateVersion at all different from
+* that of the local updateVersion a new update.
+* </p>
+* @param localVersion the current updateVersion
+* @param remoteVersion the remote updateVersion
+* @return true if Updater should consider the remote updateVersion an update, false if not.
 */
-    public boolean shouldUpdate(String localVersion, String remoteVersion) {
+    boolean shouldUpdate(String localVersion, String remoteVersion) {
         return !localVersion.equalsIgnoreCase(remoteVersion);
     }
 
     /**
-* Evaluate whether the version number is marked showing that it should not be updated by this program.
+* Evaluate whether the updateVersion number is marked showing that it should not be updated by this program.
 *
-* @param version a version number to check for tags in.
+* @param version a updateVersion number to check for tags in.
 * @return true if updating should be disabled.
 */
     private boolean hasTag(String version) {
@@ -586,7 +595,7 @@ public class UpdateChecker {
                     if (UpdateChecker.this.versionCheck(UpdateChecker.this.versionName)) {
                         if ((UpdateChecker.this.versionLink != null) && (UpdateChecker.this.type != UpdateType.NO_DOWNLOAD)) {
                             String name = UpdateChecker.this.file.getName();
-                            // If it's a zip file, it shouldn't be downloaded as the plugin's name
+                            // If it's a zip file, it shouldn't be downloaded as the plugin's updateName
                             if (UpdateChecker.this.versionLink.endsWith(".zip")) {
                                 final String[] split = UpdateChecker.this.versionLink.split("/");
                                 name = split[split.length - 1];

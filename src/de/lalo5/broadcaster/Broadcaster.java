@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @SuppressWarnings({"WeakerAccess", "ResultOfMethodCallIgnored"})
+@Deprecated
+/**
+ * Main class of the Broadcaster plugin.
+ *
+ * @deprecated This plugin is no longer maintained because of other important projects.
+ */
 public class Broadcaster extends JavaPlugin {
 	
 	public static final String prefix = "§f[§3Broadcaster§f] ";
@@ -28,10 +34,10 @@ public class Broadcaster extends JavaPlugin {
 	public int id;
 	
 	public static boolean update = false;
-	public static String name = "";
-	public static ReleaseType type = null;
-	public static String version = "";
-	public static String link = "";
+	public static String updateName = "";
+	public static ReleaseType updateType = null;
+	public static String updateVersion = "";
+	public static String updateLink = "";
 	
 	private PluginDescriptionFile descFile = getDescription();
 	
@@ -51,10 +57,10 @@ public class Broadcaster extends JavaPlugin {
 
 		UpdateChecker updater = new UpdateChecker(this, 49029, getFile(), UpdateChecker.UpdateType.DEFAULT, true);
 		update = updater.getResult() == UpdateChecker.UpdateResult.UPDATE_AVAILABLE; // Determine if there is an update ready for us
-		name = updater.getLatestName(); // Get the latest name
-		version = updater.getLatestGameVersion(); // Get the latest game version
-		type = updater.getLatestType(); // Get the latest file's type
-		link = updater.getLatestFileLink(); // Get the latest link
+		updateName = updater.getLatestName(); // Get the latest name
+		updateVersion = updater.getLatestGameVersion(); // Get the latest game version
+		updateType = updater.getLatestType(); // Get the latest file's type
+		updateLink = updater.getLatestFileLink(); // Get the latest link
 		
 		log.info(prefix + "Successfully enabled.");
 		log.info(prefix + "Version " + descFile.getVersion());
