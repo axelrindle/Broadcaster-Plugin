@@ -5,10 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
 
 /**
  * The plugin's main command <b>/brc</b>.
@@ -24,28 +21,11 @@ class BrcCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-            onPlayer(sender, command, label, args);
-        } else {
-            onConsole(sender, command, label, args);
-        }
-
-        return true;
-    }
-
-    private void onConsole(CommandSender sender, Command command, String label, String[] args) {
-
-    }
-
-    private void onPlayer(CommandSender sender, Command command, String label, String[] args) {
-
-        Player p = (Player) sender;
-
-        if(p.hasPermission("broadcaster.brc")) {
+        if(sender.hasPermission("broadcaster.brc")) {
             if(args.length == 0) {
                 sendHelp(sender);
             } else if(args[0].equalsIgnoreCase("start")) {
-                if(p.hasPermission("broadcaster.start")) {
+                if(sender.hasPermission("broadcaster.start")) {
 
                     if(!BroadcastThread.isRunning()) {
                         BroadcastThread.start(plugin, ((Broadcaster) plugin).messages, plugin.getConfig().getInt("Cast.Interval"));
@@ -62,7 +42,7 @@ class BrcCommand implements CommandExecutor {
                     noPermission(sender);
                 }
             } else if(args[0].equalsIgnoreCase("stop")) {
-                if(p.hasPermission("broadcaster.stop")) {
+                if(sender.hasPermission("broadcaster.stop")) {
 
                     if(BroadcastThread.isRunning()) {
                         BroadcastThread.stop();
@@ -79,9 +59,9 @@ class BrcCommand implements CommandExecutor {
                     noPermission(sender);
                 }
             } else if(args[0].equalsIgnoreCase("reload")) {
-                if(p.hasPermission("broadcaster.reload")) {
+                if(sender.hasPermission("broadcaster.reload")) {
 
-                    if(!BroadcastThread.isRunning()) {
+                    if(BroadcastThread.isRunning()) {
                         BroadcastThread.stop();
                         sender.sendMessage(
                                 Formatter.formatColors(plugin.getConfig().getString("Messages.ReloadStopped"))
@@ -93,20 +73,21 @@ class BrcCommand implements CommandExecutor {
                     noPermission(sender);
                 }
             } else if(args[0].equalsIgnoreCase("cast")) {
-                if(p.hasPermission("broadcaster.cast")) {
+                if(sender.hasPermission("broadcaster.cast")) {
 
                     String[] subarray = (String[]) ArrayUtils.subarray(args, 1, args.length);
                     String s = "";
                     for (String s1 : subarray) {
-                        s += s1;
+                        s += s1 + " ";
                     }
                     s = Formatter.format(plugin, s);
 
+                    String prefix = Formatter.formatColors(plugin.getConfig().getString("Cast.Prefix"));
                     boolean needsPermission = plugin.getConfig().getBoolean("Cast.NeedPermissionToSee");
                     if(needsPermission) {
-                        Bukkit.getServer().broadcast(s, "broadcaster.see");
+                        Bukkit.getServer().broadcast(prefix + s, "broadcaster.see");
                     } else {
-                        Bukkit.getServer().broadcastMessage(s);
+                        Bukkit.getServer().broadcastMessage(prefix + s);
                     }
 
                 } else {
@@ -117,6 +98,7 @@ class BrcCommand implements CommandExecutor {
             noPermission(sender);
         }
 
+        return true;
     }
 
     /**
@@ -139,7 +121,7 @@ class BrcCommand implements CommandExecutor {
         sender.sendMessage(Formatter.formatColors(Broadcaster.prefix) + "Help");
         int i = 0;
         if(sender.hasPermission("broadcaster.brc")) {
-            sender.sendMessage("§2/brc §f- §3Shows all commands");
+            sender.sendMessage("§9/brc §f- §3Shows all commands");
             i++;
         }
         if(sender.hasPermission("broadcaster.start")) {

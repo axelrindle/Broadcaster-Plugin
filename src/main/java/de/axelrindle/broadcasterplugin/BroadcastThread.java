@@ -16,10 +16,11 @@ class BroadcastThread {
     private static boolean running = false;
 
     /**
+     * Starts the scheduled message broadcast.
      *
-     * @param plugin
-     * @param messages
-     * @param interval
+     * @param plugin The {@link JavaPlugin} to get config values from.
+     * @param messages The {@link List<String>} with all loaded messages.
+     * @param interval How often the messages should be broadcasted.
      */
     static void start(JavaPlugin plugin, List<String> messages, int interval) {
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
@@ -38,11 +39,12 @@ class BroadcastThread {
             String message = messages.get(index);
             message = Formatter.format(plugin, message);
 
+            String prefix = Formatter.formatColors(plugin.getConfig().getString("Cast.Prefix"));
             boolean needsPermission = plugin.getConfig().getBoolean("Cast.NeedPermissionToSee");
             if(needsPermission) {
-                Bukkit.getServer().broadcast(message, "broadcaster.see");
+                Bukkit.getServer().broadcast(prefix + message, "broadcaster.see");
             } else {
-                Bukkit.getServer().broadcastMessage(message);
+                Bukkit.getServer().broadcastMessage(prefix + message);
             }
 
             index++;
@@ -54,20 +56,10 @@ class BroadcastThread {
     static void stop() {
         Bukkit.getScheduler().cancelTask(id);
         running = false;
+        index = 0;
     }
 
     static boolean isRunning() {
         return running;
-    }
-
-    static void cast(JavaPlugin plugin, String message) {
-        message = Formatter.format(plugin, message);
-
-        boolean needsPermission = plugin.getConfig().getBoolean("Cast.NeedPermissionToSee");
-        if(needsPermission) {
-            Bukkit.getServer().broadcast(message, "broadcaster.see");
-        } else {
-            Bukkit.getServer().broadcastMessage(message);
-        }
     }
 }
