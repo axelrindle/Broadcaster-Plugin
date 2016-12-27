@@ -1,0 +1,49 @@
+# # # # # # # # # # # # # # # # # # #
+#                                   #
+#     Broadcaster configuration     #
+#                                   #
+# # # # # # # # # # # # # # # # # # #
+
+# Broadcast specific options
+Cast:
+
+  # The prefix for all messages (e.g. "&b[&3Info&b] >" )
+  Prefix: "&b[&3Info&b] > "
+
+  # The interval in which the messages should be broadcasted.
+  # Value in seconds (60 = 1 minute)
+  Interval: 60
+
+  # Should the Broadcast automatically start on server startup?
+  OnServerStart: true
+
+  # Do the players need to have permission to see messages?
+  NeedPermissionToSee: false
+
+# Some messages (should be self-explanatory)
+Messages:
+  Started: "&aThe Broadcast was successfully started."
+  Stopped: "&aThe Broadcast was successfully stopped."
+  AlreadyRunning: "&cThe Broadcast is already running!"
+  AlreadyStopped: "&cThe Broadcast was already stopped!"
+  Starting: "&6Trying to start the Broadcast..."
+  ReloadStopped: "&cBroadcast stopped because of reload!"
+  NoPermission: "&cYou don't have permission to do that!"
+  Arguments: "&cToo few arguments!"
+
+# Placeholders for symbols.
+# Define as many as you want.
+# Predefined are:
+#   %n - New Line (\n)
+#   %online_players% - How many players are online
+#   %max_players% - Server player limit
+Placeholders:
+  - ["<3", "❤"]
+  - ["[*]", "★"]
+  - ["[**]", "✹"]
+  - ["[p]", "●"]
+  - ["[v]", "✔"]
+  - ["[+]", "♦"]
+  - ["[++]", "✦"]
+  - ["[x]", "█"]
+  - ["[/]", "▌"]
