@@ -1,3 +1,6 @@
-# Broadcaster-Plugin
+# Broadcaster Plugin
 
-Source for my Broadcaster Bukkit Plugin.
+Simple broadcasting on your server.
+
+Download and infos on BukkitDev:
+https://dev.bukkit.org/projects/broadcaster-plugin
