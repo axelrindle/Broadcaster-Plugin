@@ -1,10 +1,9 @@
 name: Broadcaster
 version: 2.0.0
-main: de.axelrindle.broadcasterplugin.Broadcaster
+main: de.axelrindle.broadcaster.Broadcaster
 author: Axel Rindle (lalo5)
 website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
 commands:
   brc:
     description: Control's the Plugin
-    usage: /<command>
-    aliases: [broadcaster, broadcast, cast]
+    usage: /brc
