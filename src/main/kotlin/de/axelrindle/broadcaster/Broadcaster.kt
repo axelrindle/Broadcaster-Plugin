@@ -54,7 +54,7 @@ class Broadcaster : JavaPlugin() {
         // start casting if we should
         if (configuration.getBoolean("Cast.OnServerStart")) startBroadcast()
 
-        info("Done! ${description.version}")
+        info("Done! v${description.version}")
     }
 
     override fun onDisable() {
