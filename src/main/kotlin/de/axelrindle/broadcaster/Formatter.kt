@@ -13,7 +13,7 @@ object Formatter {
     /**
      * Formats a message according to used placeholders and color codes.
      *
-     * @param plugin The [JavaPlugin] to get config values from.
+     * @param plugin The [Broadcaster] instance to get config values from.
      * @param msg The message to format.
      *
      * @return A formatted message.
@@ -21,10 +21,10 @@ object Formatter {
      * @see JavaPlugin.getConfig
      */
     @Suppress("UNCHECKED_CAST")
-    fun format(plugin: JavaPlugin, msg: String): String {
+    fun format(plugin: Broadcaster, msg: String): String {
         var message = msg
         // format placeholders
-        val placeholders = plugin.config.getList("Placeholders") as List<List<String>>
+        val placeholders = plugin.configuration.getList("Placeholders") as List<List<String>>
 
         for (holder in placeholders) {
             val key = holder[0]
@@ -35,7 +35,7 @@ object Formatter {
         message = formatPredefinedPlaceholders(message)
 
         // translate color codes
-        message = ChatColor.translateAlternateColorCodes('&', message)
+        message = formatColors(message)
 
         return message
     }

@@ -1,7 +1,6 @@
 package de.axelrindle.broadcaster
 
 import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * The [BroadcastingThread] class is responsible for starting and stopping for
@@ -20,11 +19,11 @@ object BroadcastingThread {
     /**
      * Starts the scheduled message broadcast.
      *
-     * @param plugin The [JavaPlugin] to get config values from.
+     * @param plugin The [Broadcaster] instance to get config values from.
      * @param messages The [List] with all loaded messages.
      * @param interval How often the messages should be broadcasted.
      */
-    fun start(plugin: JavaPlugin, messages: List<String>, interval: Int) {
+    fun start(plugin: Broadcaster, messages: List<String>, interval: Int) {
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
                 getRunnable(plugin, messages),
@@ -34,15 +33,15 @@ object BroadcastingThread {
         if (id != -1) running = true
     }
 
-    private fun getRunnable(plugin: JavaPlugin, messages: List<String>): Runnable {
+    private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
         maxIndex = messages.size
         return Runnable {
             running = false
             var message = messages[index]
             message = Formatter.format(plugin, message)
 
-            val prefix = Formatter.formatColors(plugin.config.getString("Cast.Prefix"))
-            val needsPermission = plugin.config.getBoolean("Cast.NeedPermissionToSee")
+            val prefix = Formatter.formatColors(plugin.configuration.getString("Cast.Prefix"))
+            val needsPermission = plugin.configuration.getBoolean("Cast.NeedPermissionToSee")
             if (needsPermission) {
                 Bukkit.getServer().broadcast(prefix + message, "broadcaster.see")
             } else {
