@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender
 class StopCommand(
         plugin: Broadcaster,
         parent: BrcCommand
-) : SubCommand(plugin, parent, "start", "broadcaster.start") {
+) : SubCommand(plugin, parent, "stop", "broadcaster.stop") {
 
     override fun execute(sender: CommandSender, args: Array<String>) {
         if (BroadcastingThread.running) {
