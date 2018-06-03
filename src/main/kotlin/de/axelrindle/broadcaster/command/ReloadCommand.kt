@@ -20,7 +20,7 @@ class ReloadCommand(
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
             sender.sendMessage(
-                    Formatter.formatColors(plugin.config!!.getString("Messages.ReloadStopped"))
+                    Formatter.formatColors(plugin.configuration.getString("Messages.ReloadStopped"))
             )
         }
 

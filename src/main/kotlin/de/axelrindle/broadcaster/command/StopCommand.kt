@@ -19,11 +19,11 @@ class StopCommand(
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
             sender.sendMessage(
-                    Formatter.formatColors(plugin.config!!.getString("Messages.Stopped"))
+                    Formatter.formatColors(plugin.configuration.getString("Messages.Stopped"))
             )
         } else {
             sender.sendMessage(
-                    Formatter.formatColors(plugin.config!!.getString("Messages.AlreadyStopped"))
+                    Formatter.formatColors(plugin.configuration.getString("Messages.AlreadyStopped"))
             )
         }
     }

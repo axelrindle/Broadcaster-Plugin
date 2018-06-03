@@ -59,7 +59,7 @@ class BrcCommand(
      */
     private fun noPermission(sender: CommandSender) {
         sender.sendMessage(
-                Formatter.formatColors(plugin.config!!.getString("Messages.NoPermission"))
+                Formatter.formatColors(plugin.configuration.getString("Messages.NoPermission"))
         )
     }
 

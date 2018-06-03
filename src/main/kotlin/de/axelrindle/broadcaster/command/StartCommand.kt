@@ -17,13 +17,13 @@ class StartCommand(
 
     override fun execute(sender: CommandSender, args: Array<String>) {
         if (!BroadcastingThread.running) {
-            BroadcastingThread.start(plugin, plugin.messages!!, plugin.config!!.getInt("Cast.Interval"))
+            BroadcastingThread.start(plugin, plugin.messages, plugin.configuration.getInt("Cast.Interval"))
             sender.sendMessage(
-                    Formatter.formatColors(plugin.config!!.getString("Messages.Started"))
+                    Formatter.formatColors(plugin.configuration.getString("Messages.Started"))
             )
         } else {
             sender.sendMessage(
-                    Formatter.formatColors(plugin.config!!.getString("Messages.AlreadyRunning"))
+                    Formatter.formatColors(plugin.configuration.getString("Messages.AlreadyRunning"))
             )
         }
     }

@@ -20,8 +20,8 @@ class CastCommand(
         for (s1 in subArray) s += "$s1 "
         s = Formatter.format(plugin, s)
 
-        val prefix = Formatter.formatColors(plugin.config!!.getString("Cast.Prefix"))
-        val needsPermission = plugin.config!!.getBoolean("Cast.NeedPermissionToSee")
+        val prefix = Formatter.formatColors(plugin.configuration.getString("Cast.Prefix"))
+        val needsPermission = plugin.configuration.getBoolean("Cast.NeedPermissionToSee")
         if (needsPermission) // only send to those having the required permission
             Bukkit.getServer().broadcast(prefix + s, "broadcaster.see")
         else // send to all

@@ -31,8 +31,8 @@ class Broadcaster : JavaPlugin() {
         }
     }
 
-    private var configuration: FileConfiguration? = null
-    internal var messages: List<String>? = null
+    internal lateinit var configuration: FileConfiguration
+    internal lateinit var messages: List<String>
 
     override fun onEnable() {
         info("Startup...")
@@ -52,7 +52,7 @@ class Broadcaster : JavaPlugin() {
         getCommand("brc").executor = BrcCommand(this)
 
         // start casting if we should
-        if (config!!.getBoolean("Cast.OnServerStart")) startBroadcast()
+        if (configuration.getBoolean("Cast.OnServerStart")) startBroadcast()
 
         info("Done! ${description.version}")
     }
@@ -87,13 +87,9 @@ class Broadcaster : JavaPlugin() {
         messages = config.getStringList("Messages")
     }
 
-    override fun getConfig(): FileConfiguration? {
-        return configuration
-    }
-
     private fun startBroadcast() {
-        val interval = configuration!!.getInt("Cast.Interval")
-        BroadcastingThread.start(this, messages!!, interval)
+        val interval = configuration.getInt("Cast.Interval")
+        BroadcastingThread.start(this, messages, interval)
     }
 
 }
