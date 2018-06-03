@@ -55,6 +55,11 @@ object Formatter {
         return message
     }
 
+    /**
+     * Formats a message to enable display of colors in the chat.
+     *
+     * @see ChatColor.translateAlternateColorCodes
+     */
     fun formatColors(message: String): String {
         return ChatColor.translateAlternateColorCodes('&', message)
     }

@@ -6,6 +6,9 @@ import org.apache.commons.lang.ArrayUtils
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
+/**
+ * A [SubCommand] which enables a user to manually cast a message.
+ */
 class CastCommand(
         plugin: Broadcaster,
         parent: BrcCommand

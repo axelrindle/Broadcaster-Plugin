@@ -7,6 +7,9 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import java.io.IOException
 
+/**
+ * A [SubCommand] which reloads the plugin configuration from disk.
+ */
 class ReloadCommand(
         plugin: Broadcaster,
         parent: BrcCommand

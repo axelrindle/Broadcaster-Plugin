@@ -3,6 +3,10 @@ package de.axelrindle.broadcaster
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * The [BroadcastingThread] class is responsible for starting and stopping for
+ * scheduling a repeating task that broadcasts the configured messages.
+ */
 object BroadcastingThread {
 
     private var id: Int = 0
@@ -51,6 +55,9 @@ object BroadcastingThread {
         }
     }
 
+    /**
+     * Stops the broadcasting task.
+     */
     fun stop() {
         Bukkit.getScheduler().cancelTask(id)
         running = false

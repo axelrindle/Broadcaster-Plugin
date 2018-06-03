@@ -12,6 +12,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.logging.Logger
 
+/**
+ * The main plugin class. Does initialization and config loading.
+ */
 class Broadcaster : JavaPlugin() {
 
     companion object {
@@ -20,6 +23,9 @@ class Broadcaster : JavaPlugin() {
 
         private val logger = Logger.getLogger("Broadcaster")
 
+        /**
+         * Wrapper function around [Logger.info] which includes the [CONSOLE_PREFIX].
+         */
         fun info(msg: String) {
             logger.info("$CONSOLE_PREFIX $msg")
         }

@@ -6,6 +6,9 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
+/**
+ * The main [CommandExecutor] for the plugin.
+ */
 class BrcCommand(
         private val plugin: Broadcaster
 ) : CommandExecutor {

@@ -5,6 +5,11 @@ import de.axelrindle.broadcaster.BroadcastingThread
 import de.axelrindle.broadcaster.Formatter
 import org.bukkit.command.CommandSender
 
+/**
+ * A [SubCommand] which stops the broadcasting thread.
+ *
+ * @see BroadcastingThread
+ */
 class StopCommand(
         plugin: Broadcaster,
         parent: BrcCommand
