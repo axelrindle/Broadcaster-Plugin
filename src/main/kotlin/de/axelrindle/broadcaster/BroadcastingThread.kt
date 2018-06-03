@@ -34,7 +34,6 @@ object BroadcastingThread {
     private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
         maxIndex = messages.size
         return Runnable {
-            running = false
             var message = messages[index]
             message = Formatter.format(plugin, message)
 
@@ -48,7 +47,6 @@ object BroadcastingThread {
 
             index++
             if (index == maxIndex) index = 0
-            running = true
         }
     }
 
