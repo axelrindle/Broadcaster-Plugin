@@ -6,5 +6,4 @@ website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
 commands:
   brc:
     description: Control's the Plugin
-    usage: /<command>
-    aliases: [broadcaster, broadcast, cast]
+    usage: /brc
