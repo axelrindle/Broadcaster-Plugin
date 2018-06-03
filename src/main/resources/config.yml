@@ -20,6 +20,9 @@ Cast:
   # Do the players need to have permission to see messages?
   NeedPermissionToSee: false
 
+  # Whether to broadcast the messages in a random order.
+  Randomize: false
+
 # Some messages (should be self-explanatory)
 Messages:
   Started: "&aThe Broadcast was successfully started."
