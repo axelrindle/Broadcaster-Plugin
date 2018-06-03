@@ -11,10 +11,8 @@ object BroadcastingThread {
     private var id: Int = 0
     private var index = 0
     private var maxIndex: Int = 0
-    private var _running = false
-
-    var running: Boolean = false
-        get() = _running
+    internal var running = false
+        private set
 
     /**
      * Starts the scheduled message broadcast.
