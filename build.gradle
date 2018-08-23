@@ -55,7 +55,7 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.2'
 
     // Spigot/Bukkit API
-    compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT"
 }
 
 jar {
