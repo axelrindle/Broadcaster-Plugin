@@ -52,7 +52,7 @@ dependencies {
     compile group: 'org.jetbrains', name: 'annotations', version:'16.0.2'
     compile group: 'commons-io', name: 'commons-io', version:'2.6'
 
-    compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.2'
 
     // Spigot/Bukkit API
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
