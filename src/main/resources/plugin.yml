@@ -1,7 +1,7 @@
 name: Broadcaster
 version: 2.1.0
 main: de.axelrindle.broadcaster.Broadcaster
-author: Axel Rindle (lalo5)
+author: Axel Rindle
 website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
 depend: [PocketKnife]
 commands:
