@@ -1,5 +1,5 @@
 name: Broadcaster
-version: 2.1.0
+version: @VERSION@
 main: de.axelrindle.broadcaster.Broadcaster
 author: Axel Rindle
 website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin

@@ -47,6 +47,12 @@ dependencies {
     compileOnly "com.github.axelrindle:PocketKnife:1.2.2"
 }
 
+processResources {
+    filter { line ->
+        line.replaceAll("@VERSION@", project.version.toString())
+    }
+}
+
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
