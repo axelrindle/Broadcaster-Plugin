@@ -1,10 +1,7 @@
-apply plugin: 'java'
 apply plugin: 'kotlin'
 
 group = 'de.axelrindle'
 version = '2.1.0'
-
-description = """"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -20,19 +17,14 @@ buildscript {
     }
 }
 compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    kotlinOptions.jvmTarget = targetCompatibility.toString()
 }
 compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    kotlinOptions.jvmTarget = targetCompatibility.toString()
 }
 
-
 sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs = ['src/main/kotlin']
 }
 
 repositories {
@@ -56,7 +48,5 @@ dependencies {
 }
 
 jar {
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
