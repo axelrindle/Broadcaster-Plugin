@@ -1,6 +1,7 @@
 package de.axelrindle.broadcaster
 
 import de.axelrindle.broadcaster.util.Align
+import de.axelrindle.broadcaster.util.Formatter
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import org.apache.commons.lang.math.RandomUtils
 import org.bukkit.Bukkit

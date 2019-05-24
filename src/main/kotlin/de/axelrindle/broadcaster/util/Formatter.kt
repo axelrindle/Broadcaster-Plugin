@@ -1,5 +1,6 @@
-package de.axelrindle.broadcaster
+package de.axelrindle.broadcaster.util
 
+import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import org.apache.commons.lang.StringUtils
 import org.bukkit.Bukkit

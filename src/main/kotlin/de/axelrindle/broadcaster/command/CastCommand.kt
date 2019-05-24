@@ -1,7 +1,7 @@
 package de.axelrindle.broadcaster.command
 
 import de.axelrindle.broadcaster.Broadcaster
-import de.axelrindle.broadcaster.Formatter
+import de.axelrindle.broadcaster.util.Formatter
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import de.axelrindle.pocketknife.util.Extensions.sendMessageF
