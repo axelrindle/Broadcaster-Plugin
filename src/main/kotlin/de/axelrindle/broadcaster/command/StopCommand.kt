@@ -2,33 +2,48 @@ package de.axelrindle.broadcaster.command
 
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
-import de.axelrindle.broadcaster.Formatter
+import de.axelrindle.pocketknife.PocketCommand
+import de.axelrindle.pocketknife.util.Extensions.sendMessageF
+import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
 /**
- * A [SubCommand] which stops the broadcasting thread.
+ * Stops the broadcasting thread.
  *
  * @see BroadcastingThread
  */
 class StopCommand(
-        plugin: Broadcaster,
-        parent: BrcCommand
-) : SubCommand(plugin, parent, "stop", "broadcaster.stop") {
+        private val plugin: Broadcaster
+) : PocketCommand() {
 
-    override fun execute(sender: CommandSender, args: Array<String>) {
+    override fun getName(): String {
+        return "stop"
+    }
+
+    override fun getDescription(): String {
+        return "Stop the broadcast."
+    }
+
+    override fun getUsage(): String {
+        return "/brc stop"
+    }
+
+    override fun getPermission(): String {
+        return "broadcaster.stop"
+    }
+
+    override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
+        val config = plugin.config.access("config")!!
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
-            sender.sendMessage(
-                    Formatter.formatColors(plugin.configuration.getString("Messages.Stopped"))
-            )
+            sender.sendMessageF(config.getString("Messages.Stopped")!!)
         } else {
-            sender.sendMessage(
-                    Formatter.formatColors(plugin.configuration.getString("Messages.AlreadyStopped"))
-            )
+            sender.sendMessageF(config.getString("Messages.AlreadyStopped")!!)
         }
+        return true
     }
 
     override fun sendHelp(sender: CommandSender) {
-        sender.sendMessage("§9/brc stop §f- §3Stop the Broadcast")
+        sender.sendMessageF("&9${getUsage()} &f- &3${getDescription()}")
     }
 }

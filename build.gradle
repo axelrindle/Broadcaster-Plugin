@@ -35,27 +35,23 @@ sourceSets {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    maven {
-        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
-    }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     // Kotlin stdlib
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
+    
     // Dependencies
-    compile group: 'org.jetbrains', name: 'annotations', version:'16.0.3'
-    compile group: 'commons-io', name: 'commons-io', version:'2.6'
-
     compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.2'
 
     // Spigot/Bukkit API
     compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
+    compileOnly "com.github.axelrindle:PocketKnife:1.2.2"
 }
 
 jar {

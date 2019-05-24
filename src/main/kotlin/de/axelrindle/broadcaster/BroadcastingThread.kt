@@ -1,5 +1,7 @@
 package de.axelrindle.broadcaster
 
+import de.axelrindle.broadcaster.util.Align
+import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import org.apache.commons.lang.math.RandomUtils
 import org.bukkit.Bukkit
 
@@ -19,12 +21,13 @@ object BroadcastingThread {
 
     /**
      * Starts the scheduled message broadcast.
-     *
-     * @param plugin The [Broadcaster] instance to get config values from.
-     * @param messages The [List] with all loaded messages.
-     * @param interval How often the messages should be broadcasted.
      */
-    fun start(plugin: Broadcaster, messages: List<String>, interval: Int) {
+    fun start() {
+        // config options
+        val plugin = Broadcaster.instance!!
+        val messages = plugin.config.access("messages")!!.getStringList("Messages")
+        val interval = plugin.config.access("config")!!.getInt("Cast.Interval")
+
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
                 getRunnable(plugin, messages),
@@ -36,24 +39,37 @@ object BroadcastingThread {
 
     private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
         maxIndex = messages.size
-        randomize = plugin.configuration.getBoolean("Cast.Randomize")
+        randomize = plugin.config.access("config")!!.getBoolean("Cast.Randomize")
         return Runnable {
+            // get a message
             var message = if (randomize) getRandomMessage(messages) else messages[index]
             message = Formatter.format(plugin, message)
 
-            val prefix = Formatter.formatColors(plugin.configuration.getString("Cast.Prefix"))
-            val needsPermission = plugin.configuration.getBoolean("Cast.NeedPermissionToSee")
-            if (needsPermission) {
-                Bukkit.getServer().broadcast(prefix + message, "broadcaster.see")
+            // config
+            val prefix = formatColors(plugin.config.access("config")!!.getString("Cast.Prefix")!!)
+            val needsPermission = plugin.config.access("config")!!.getBoolean("Cast.NeedPermissionToSee")
+
             } else {
                 Bukkit.getServer().broadcastMessage(prefix + message)
             }
+            broadcast("$prefix $message", getPermission(needsPermission))
 
             // don't change index if randomizing
             if (randomize) return@Runnable
             index++
             if (index == maxIndex) index = 0
         }
+    }
+
+    private fun getPermission(needsPermission: Boolean): String? {
+        return if (needsPermission) "broadcaster.see" else null
+    }
+
+    private fun broadcast(message: String, permission: String? = null) {
+        if (permission == null)
+            Bukkit.broadcastMessage(message)
+        else
+            Bukkit.broadcast(message, permission)
     }
 
     /**

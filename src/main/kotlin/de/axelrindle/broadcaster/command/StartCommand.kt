@@ -2,33 +2,48 @@ package de.axelrindle.broadcaster.command
 
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
-import de.axelrindle.broadcaster.Formatter
+import de.axelrindle.pocketknife.PocketCommand
+import de.axelrindle.pocketknife.util.Extensions.sendMessageF
+import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 
 /**
- * A [SubCommand] which starts the broadcasting thread.
+ * Starts the broadcasting thread.
  *
  * @see BroadcastingThread
  */
 class StartCommand(
-        plugin: Broadcaster,
-        parent: BrcCommand
-) : SubCommand(plugin, parent, "start", "broadcaster.start") {
+        private val plugin: Broadcaster
+) : PocketCommand() {
 
-    override fun execute(sender: CommandSender, args: Array<String>) {
+    override fun getName(): String {
+        return "start"
+    }
+
+    override fun getDescription(): String {
+        return "Start the broadcast."
+    }
+
+    override fun getUsage(): String {
+        return "/brc start"
+    }
+
+    override fun getPermission(): String {
+        return "broadcaster.start"
+    }
+
+    override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
+        val config = plugin.config.access("config")!!
         if (!BroadcastingThread.running) {
-            BroadcastingThread.start(plugin, plugin.messages, plugin.configuration.getInt("Cast.Interval"))
-            sender.sendMessage(
-                    Formatter.formatColors(plugin.configuration.getString("Messages.Started"))
-            )
+            BroadcastingThread.start()
+            sender.sendMessageF(config.getString("Messages.Started")!!)
         } else {
-            sender.sendMessage(
-                    Formatter.formatColors(plugin.configuration.getString("Messages.AlreadyRunning"))
-            )
+            sender.sendMessageF(config.getString("Messages.AlreadyRunning")!!)
         }
+        return true
     }
 
     override fun sendHelp(sender: CommandSender) {
-        sender.sendMessage("§9/brc start §f- §3Start the Broadcast")
+        sender.sendMessageF("&9${getUsage()} &f- &3${getDescription()}")
     }
 }

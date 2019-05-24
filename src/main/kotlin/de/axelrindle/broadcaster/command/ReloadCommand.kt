@@ -2,42 +2,58 @@ package de.axelrindle.broadcaster.command
 
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
-import de.axelrindle.broadcaster.Formatter
+import de.axelrindle.pocketknife.PocketCommand
+import de.axelrindle.pocketknife.util.Extensions.sendMessageF
 import org.bukkit.Bukkit
+import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import java.io.IOException
 
 /**
- * A [SubCommand] which reloads the plugin configuration from disk.
+ * Reloads the plugin configuration from disk.
  */
 class ReloadCommand(
-        plugin: Broadcaster,
-        parent: BrcCommand
-) : SubCommand(plugin, parent, "reload", "broadcaster.reload") {
+        private val plugin: Broadcaster
+) : PocketCommand() {
 
-    override fun execute(sender: CommandSender, args: Array<String>) {
+    override fun getName(): String {
+        return "reload"
+    }
+
+    override fun getDescription(): String {
+        return "Reload the plugin. (Stop's the Broadcast!)"
+    }
+
+    override fun getUsage(): String {
+        return "/brc reload"
+    }
+
+    override fun getPermission(): String {
+        return "broadcaster.reload"
+    }
+
+    override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
         // stop broadcasting first
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
-            sender.sendMessage(
-                    Formatter.formatColors(plugin.configuration.getString("Messages.ReloadStopped"))
-            )
+            sender.sendMessageF(plugin.config.access("config")!!
+                    .getString("Messages.ReloadStopped")!!)
         }
 
         // reload configurations
         try {
-            plugin.reloadConfig()
-            plugin.loadMessages()
+            plugin.config.reload("config")
+            plugin.config.reload("messages")
+            sender.sendMessageF("&aSuccessfully reloaded.")
         } catch (e: IOException) {
-            sender.sendMessage("An error occurred! Check the console! Disabling now...")
+            sender.sendMessageF("&cAn error occurred! Check the console! Disabling now...")
             e.printStackTrace()
             Bukkit.getPluginManager().disablePlugin(plugin)
-            return
         }
-        sender.sendMessage(Formatter.formatColors("&aSuccessfully reloaded."))
+        return true
     }
 
     override fun sendHelp(sender: CommandSender) {
-        sender.sendMessage("§9/brc reload §f- §3Reload the plugin! (Stop's the Broadcast!)")
+        sender.sendMessageF("&9${getUsage()} &f- &3${getDescription()}")
     }
 }

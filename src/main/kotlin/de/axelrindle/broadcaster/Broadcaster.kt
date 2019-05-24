@@ -1,16 +1,11 @@
 package de.axelrindle.broadcaster
 
-import com.google.common.io.Files
 import de.axelrindle.broadcaster.command.BrcCommand
-import org.apache.commons.io.IOUtils
+import de.axelrindle.pocketknife.PocketCommand
+import de.axelrindle.pocketknife.PocketConfig
 import org.bukkit.Bukkit
-import org.bukkit.configuration.file.FileConfiguration
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.util.logging.Logger
 
 /**
  * The main plugin class. Does initialization and config loading.
@@ -18,78 +13,48 @@ import java.util.logging.Logger
 class Broadcaster : JavaPlugin() {
 
     companion object {
-        const val CONSOLE_PREFIX = "[Broadcaster]"
-        const val CHAT_PREFIX = "&2Broadcaster &f>"
-
-        private val logger = Logger.getLogger("Broadcaster")
-
-        /**
-         * Wrapper function around [Logger.info] which includes the [CONSOLE_PREFIX].
-         */
-        fun info(msg: String) {
-            logger.info("$CONSOLE_PREFIX $msg")
-        }
+        const val CHAT_PREFIX = "&2Broadcaster &f> "
+        var instance: Broadcaster? = null
     }
 
-    internal lateinit var configuration: FileConfiguration
-    internal lateinit var messages: List<String>
+    internal val config = PocketConfig(this)
 
     override fun onEnable() {
-        info("Startup...")
+        logger.info("Startup...")
+
+        // instance setup
+        if (instance == null) {
+            instance = this
+        } else {
+            logger.severe("An instance already exists!?")
+            Bukkit.getPluginManager().disablePlugin(this)
+            return
+        }
 
         // loading configuration files
-        info("Loading configuration...")
+        logger.info("Loading configuration...")
         try {
-            reloadConfig()
-            loadMessages()
+            config.register("config", getResource("config.yml")!!)
+            config.register("messages", getResource("messages.yml")!!)
         } catch (e: IOException) {
-            e.printStackTrace()
+            logger.severe("Failed to load configuration files!")
+            logger.severe(e.message)
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
 
         // register command
-        getCommand("brc").executor = BrcCommand(this)
+        PocketCommand.register(this, BrcCommand(this))
 
         // start casting if we should
-        if (configuration.getBoolean("Cast.OnServerStart")) startBroadcast()
+        if (config.access("config")!!.getBoolean("Cast.OnServerStart"))
+            BroadcastingThread.start()
 
-        info("Done! v${description.version}")
+        logger.info("Done! v${description.version}")
     }
 
     override fun onDisable() {
         BroadcastingThread.stop()
-        info("Shutdown complete.")
+        logger.info("Shutdown complete.")
     }
-
-    @Throws(IOException::class)
-    override fun reloadConfig() {
-        val file = File("plugins/Broadcaster/config.yml")
-        if (!file.exists()) {
-            Files.createParentDirs(file)
-            file.createNewFile()
-            IOUtils.copy(getResource("config.yml"), FileOutputStream(file))
-        }
-
-        configuration = YamlConfiguration.loadConfiguration(file)
-    }
-
-    @Throws(IOException::class)
-    internal fun loadMessages() {
-        val file = File("plugins/Broadcaster/messages.yml")
-        if (!file.exists()) {
-            Files.createParentDirs(file)
-            file.createNewFile()
-            IOUtils.copy(getResource("messages.yml"), FileOutputStream(file))
-        }
-
-        val config = YamlConfiguration.loadConfiguration(file)
-        messages = config.getStringList("Messages")
-    }
-
-    private fun startBroadcast() {
-        val interval = configuration.getInt("Cast.Interval")
-        BroadcastingThread.start(this, messages, interval)
-    }
-
 }

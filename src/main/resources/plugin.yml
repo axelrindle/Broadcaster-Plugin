@@ -3,6 +3,7 @@ version: 2.1.0
 main: de.axelrindle.broadcaster.Broadcaster
 author: Axel Rindle (lalo5)
 website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
+depend: [PocketKnife]
 commands:
   brc:
     description: Control's the Plugin
