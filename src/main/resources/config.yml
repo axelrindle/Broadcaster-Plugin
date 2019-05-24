@@ -8,7 +8,7 @@
 Cast:
 
   # The prefix for all messages (e.g. "&b[&3Info&b] >" )
-  Prefix: "&b[&3Info&b] > "
+  Prefix: "&b[&3Info&b] >"
 
   # The interval in which the messages should be broadcasted.
   # Value in seconds (60 = 1 minute)
