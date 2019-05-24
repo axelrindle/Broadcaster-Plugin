@@ -50,10 +50,12 @@ object BroadcastingThread {
             val prefix = formatColors(plugin.config.access("config")!!.getString("Cast.Prefix")!!)
             val needsPermission = plugin.config.access("config")!!.getBoolean("Cast.NeedPermissionToSee")
 
+            // check for center alignment
+            if (message.startsWith("%c")) {
+                sendCentered(prefix, message.replace("%c", ""), needsPermission)
             } else {
-                Bukkit.getServer().broadcastMessage(prefix + message)
+                broadcast("$prefix $message", getPermission(needsPermission))
             }
-            broadcast("$prefix $message", getPermission(needsPermission))
 
             // don't change index if randomizing
             if (randomize) return@Runnable
@@ -64,6 +66,14 @@ object BroadcastingThread {
 
     private fun getPermission(needsPermission: Boolean): String? {
         return if (needsPermission) "broadcaster.see" else null
+    }
+
+    private fun sendCentered(prefix: String, message: String, needsPermission: Boolean) {
+        val permission = getPermission(needsPermission)
+        val list = Align.center(message, prefix)
+        list.forEach {
+            broadcast("$prefix $it", permission)
+        }
     }
 
     private fun broadcast(message: String, permission: String? = null) {
