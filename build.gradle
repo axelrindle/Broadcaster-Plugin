@@ -10,7 +10,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 buildscript {
-    ext.kotlin_version = '1.2.71'
+    ext.kotlin_version = '1.3.31'
+
     repositories {
         mavenCentral()
     }
@@ -49,8 +50,8 @@ dependencies {
     // Dependencies
     compile group: 'org.apache.commons', name: 'commons-collections4', version:'4.2'
 
-    // Spigot/Bukkit API
-    compileOnly "org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT"
+    // APIs
+    compileOnly "org.spigotmc:spigot-api:1.14.1-R0.1-SNAPSHOT"
     compileOnly "com.github.axelrindle:PocketKnife:1.2.2"
 }
 
