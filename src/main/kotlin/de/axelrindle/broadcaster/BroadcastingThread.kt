@@ -38,6 +38,15 @@ object BroadcastingThread {
         if (id != -1) running = true
     }
 
+    /**
+     * Stops the broadcasting task.
+     */
+    fun stop() {
+        Bukkit.getScheduler().cancelTask(id)
+        running = false
+        index = 0
+    }
+
     private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
         maxIndex = messages.size
         randomize = plugin.config.access("config")!!.getBoolean("Cast.Randomize")
@@ -103,14 +112,5 @@ object BroadcastingThread {
             lastRandomIndex = rand
             messages[rand]
         }
-    }
-
-    /**
-     * Stops the broadcasting task.
-     */
-    fun stop() {
-        Bukkit.getScheduler().cancelTask(id)
-        running = false
-        index = 0
     }
 }
