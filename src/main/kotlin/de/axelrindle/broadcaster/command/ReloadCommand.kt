@@ -3,7 +3,7 @@ package de.axelrindle.broadcaster.command
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
 import de.axelrindle.pocketknife.PocketCommand
-import de.axelrindle.pocketknife.util.Extensions.sendMessageF
+import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender

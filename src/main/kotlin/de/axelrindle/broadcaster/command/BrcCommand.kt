@@ -3,7 +3,7 @@ package de.axelrindle.broadcaster.command
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
-import de.axelrindle.pocketknife.util.Extensions.sendMessageF
+import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import de.axelrindle.broadcaster.Broadcaster.Companion.CHAT_PREFIX
