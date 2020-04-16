@@ -8,6 +8,8 @@ ReloadStopped: "&cDurch das Neuladen werden keine globalen Nachrichten mehr gese
 NoPermission: "&cDu hast keine Berechtigung dazu!"
 Arguments: "&cZu wenig Argumente!"
 
+Words:
+  Help: "Hilfe"
 CommandHelp:
   Brc: "Zeigt eine Liste mit verfügbaren Befehlen an."
   Cast: "Sende eine eigene Nachricht an alle Spieler."

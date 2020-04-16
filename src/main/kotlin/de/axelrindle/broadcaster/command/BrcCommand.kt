@@ -38,7 +38,8 @@ class BrcCommand(
     }
 
     override fun sendHelp(sender: CommandSender) {
-        sender.sendMessageF(CHAT_PREFIX + "Help")
+        val helpText = plugin.localization.localize("Words.Help")!!
+        sender.sendMessageF(CHAT_PREFIX + helpText)
         var i = 0
         if (sender.hasPermission("broadcaster.brc")) {
             sender.sendMessageF("&9/${getName()} &f- &3${getDescription()}")

@@ -8,8 +8,10 @@ ReloadStopped: "&cBroadcast stopped because of reload!"
 NoPermission: "&cYou don't have permission to do that!"
 Arguments: "&cToo few arguments!"
 
+Words:
+  Help: "Help"
 CommandHelp:
-  Brc: "Shows a list of available commands."
+  Brc: "Show a list of available commands."
   Cast: "Cast a custom message around the server."
   Reload: "Reload configuration files from disk. Broadcasting will be stopped."
   Start: "Start the broadcast."

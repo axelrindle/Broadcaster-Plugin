@@ -37,7 +37,7 @@ class StartCommand(
             BroadcastingThread.start()
             sender.sendMessageF(plugin.localization.localize("Started")!!)
         } else {
-            sender.sendMessageF(plugin.localization.localize("Messages.AlreadyRunning")!!)
+            sender.sendMessageF(plugin.localization.localize("AlreadyRunning")!!)
         }
         return true
     }
