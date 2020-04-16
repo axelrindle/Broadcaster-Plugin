@@ -5,6 +5,10 @@ import de.axelrindle.broadcaster.util.Formatter
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import org.apache.commons.lang.math.RandomUtils
 import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 
 /**
  * The [BroadcastingThread] class is responsible for starting and stopping for
@@ -19,11 +23,15 @@ object BroadcastingThread {
     private var lastRandomIndex: Int = 0
     internal var running = false
         private set
+    internal var paused = false
 
     /**
      * Starts the scheduled message broadcast.
      */
     fun start() {
+        if (running) return
+        paused = false
+
         // config options
         val plugin = Broadcaster.instance!!
         val messages = plugin.config.access("messages")!!.getStringList("Messages")
@@ -32,7 +40,7 @@ object BroadcastingThread {
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
                 getRunnable(plugin, messages),
-                0L,
+                interval * 20L,
                 interval * 20L // 20L is one "Tick" (Minecraft Second) in Minecraft. To calculate the period, we need to multiply the interval seconds with the length of one Tick.
         )
         if (id != -1) running = true
@@ -40,11 +48,16 @@ object BroadcastingThread {
 
     /**
      * Stops the broadcasting task.
+     *
+     * @param pause Whether to pause instead of stopping. Pausing will not reset the message index.
      */
-    fun stop() {
+    fun stop(pause: Boolean = false) {
         Bukkit.getScheduler().cancelTask(id)
         running = false
-        index = 0
+        if (pause)
+            paused = true
+        else
+            index = 0
     }
 
     private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
@@ -111,6 +124,30 @@ object BroadcastingThread {
             // we got a different index, so save it and return the appropriate message
             lastRandomIndex = rand
             messages[rand]
+        }
+    }
+
+    /**
+     * Listens for player events to pause or resume the broadcast.
+     */
+    class EventListener : Listener {
+
+        @EventHandler
+        fun onPlayerJoin(event: PlayerJoinEvent) {
+            if (paused) {
+                start()
+            }
+        }
+
+        @EventHandler
+        fun onPlayerQuit(event: PlayerQuitEvent) {
+            val pauseOnEmpty = Broadcaster.instance!!.config.access("config")!!
+                    .getBoolean("Cast.PauseOnEmptyServer")
+            val onlinePlayers = Bukkit.getOnlinePlayers().size - 1
+            if (pauseOnEmpty && onlinePlayers <= 0) {
+                Broadcaster.instance!!.logger.info("Broadcasting paused.")
+                stop(true)
+            }
         }
     }
 }

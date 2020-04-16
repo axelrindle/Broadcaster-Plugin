@@ -28,7 +28,8 @@ class BrcCommand(
                 StartCommand(plugin),
                 StopCommand(plugin),
                 ReloadCommand(plugin),
-                CastCommand(plugin)
+                CastCommand(plugin),
+                StatusCommand(plugin)
         )
     }
 

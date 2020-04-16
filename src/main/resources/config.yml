@@ -23,6 +23,9 @@ Cast:
   # Whether to broadcast the messages in a random order.
   Randomize: false
 
+  # Whether to pause the broadcast when no players are online.
+  PauseOnEmptyServer: false
+
 # Placeholders for symbols.
 # Define as many as you want.
 # Predefined are:

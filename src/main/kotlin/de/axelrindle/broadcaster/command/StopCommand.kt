@@ -25,7 +25,7 @@ class StopCommand(
     }
 
     override fun getUsage(): String {
-        return "/brc stop"
+        return "/brc stop [pause]"
     }
 
     override fun getPermission(): String {
@@ -33,13 +33,20 @@ class StopCommand(
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
+        val pause = args.isNotEmpty() && args[0] == "pause"
+
         if (BroadcastingThread.running) {
-            BroadcastingThread.stop()
-            sender.sendMessageF(plugin.localization.localize("Stopped")!!)
+            BroadcastingThread.stop(pause)
+            val key = if (pause) "Paused" else "Stopped"
+            sender.sendMessageF(plugin.localization.localize(key)!!)
         } else {
             sender.sendMessageF(plugin.localization.localize("AlreadyStopped")!!)
         }
         return true
+    }
+
+    override fun tabComplete(sender: CommandSender, command: Command, args: Array<out String>): MutableList<String> {
+        return arrayListOf("pause")
     }
 
     override fun sendHelp(sender: CommandSender) {

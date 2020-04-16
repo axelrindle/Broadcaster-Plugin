@@ -53,8 +53,22 @@ class Broadcaster : JavaPlugin() {
         PocketCommand.register(this, BrcCommand(this))
 
         // start casting if we should
-        if (config.access("config")!!.getBoolean("Cast.OnServerStart"))
-            BroadcastingThread.start()
+        val mainConfig = config.access("config")!!
+        val pauseOnEmptyServer = mainConfig.getBoolean("Cast.PauseOnEmptyServer")
+        if (mainConfig.getBoolean("Cast.OnServerStart")) {
+
+            // if the broadcast should be paused on empty server, start with an initial pause,
+            // because no player will be online immediately after server start
+            if (pauseOnEmptyServer) {
+                Bukkit.getPluginManager().registerEvents(BroadcastingThread.EventListener(), this)
+                BroadcastingThread.paused = true
+            }
+
+            // else just start the broadcast normally
+            else {
+                BroadcastingThread.start()
+            }
+        }
 
         logger.info("Done! v${description.version}")
     }
