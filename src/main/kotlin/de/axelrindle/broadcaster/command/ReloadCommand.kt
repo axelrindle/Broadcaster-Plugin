@@ -41,8 +41,7 @@ class ReloadCommand(
 
         // reload configurations
         try {
-            plugin.config.reload("config")
-            plugin.config.reload("messages")
+            plugin.config.reloadAll()
             sender.sendMessageF("&aSuccessfully reloaded.")
         } catch (e: IOException) {
             sender.sendMessageF("&cAn error occurred! Check the console! Disabling now...")
