@@ -1,9 +1,8 @@
 package de.axelrindle.broadcaster.util
 
 import com.google.common.collect.Lists
-import org.apache.commons.lang.SystemUtils
-import org.apache.commons.lang.WordUtils
 import org.bukkit.ChatColor
+import org.bukkit.util.ChatPaginator
 
 /**
  * Utilities for aligning a message in the chat.
@@ -72,7 +71,7 @@ object Align {
     private fun getStringWidth(str: String): Int {
         var length = 0
         var bold = false
-        for (i in 0 until str.length)
+        for (i in str.indices)
             if (str[i] != ChatColor.COLOR_CHAR)
                 if (i == 0)
                     length += getCharWidth(str[i], bold)
@@ -108,10 +107,9 @@ object Align {
      * @see centerSingle
      */
     fun center(message: String, prefix: String?): List<String> {
-        return WordUtils
-                .wrap(message, 50) // split on multiple lines when too long
-                .split(SystemUtils.LINE_SEPARATOR)
+        return ChatPaginator
+                .wordWrap(message, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) // split on multiple lines when too long
                 .filter(String::isNotBlank) // remove blank lines
-                .map { return@map centerSingle(it, prefix) } // center pieces
+                .map { centerSingle(it, prefix) } // center pieces
     }
 }
