@@ -21,7 +21,7 @@ class ReloadCommand(
     }
 
     override fun getDescription(): String {
-        return "Reload the plugin. (Stop's the Broadcast!)"
+        return plugin.localization.localize("CommandHelp.Reload")!!
     }
 
     override fun getUsage(): String {
@@ -36,8 +36,7 @@ class ReloadCommand(
         // stop broadcasting first
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
-            sender.sendMessageF(plugin.config.access("config")!!
-                    .getString("Messages.ReloadStopped")!!)
+            sender.sendMessageF(plugin.localization.localize("ReloadStopped")!!)
         }
 
         // reload configurations

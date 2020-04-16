@@ -23,17 +23,6 @@ Cast:
   # Whether to broadcast the messages in a random order.
   Randomize: false
 
-# Some messages (should be self-explanatory)
-Messages:
-  Started: "&aThe Broadcast was successfully started."
-  Stopped: "&aThe Broadcast was successfully stopped."
-  AlreadyRunning: "&cThe Broadcast is already running!"
-  AlreadyStopped: "&cThe Broadcast was already stopped!"
-  Starting: "&6Trying to start the Broadcast..."
-  ReloadStopped: "&cBroadcast stopped because of reload!"
-  NoPermission: "&cYou don't have permission to do that!"
-  Arguments: "&cToo few arguments!"
-
 # Placeholders for symbols.
 # Define as many as you want.
 # Predefined are:

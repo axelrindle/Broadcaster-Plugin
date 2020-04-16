@@ -3,6 +3,7 @@ package de.axelrindle.broadcaster
 import de.axelrindle.broadcaster.command.BrcCommand
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.PocketConfig
+import de.axelrindle.pocketknife.PocketLang
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.IOException
@@ -18,6 +19,7 @@ class Broadcaster : JavaPlugin() {
     }
 
     internal val config = PocketConfig(this)
+    internal var localization = PocketLang(this, config)
 
     override fun onEnable() {
         logger.info("Startup...")
@@ -42,6 +44,10 @@ class Broadcaster : JavaPlugin() {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
+
+        // localization init
+        localization.addLanguages("en", "de")
+        localization.init()
 
         // register command
         PocketCommand.register(this, BrcCommand(this))

@@ -21,7 +21,7 @@ class StopCommand(
     }
 
     override fun getDescription(): String {
-        return "Stop the broadcast."
+        return plugin.localization.localize("CommandHelp.Stop")!!
     }
 
     override fun getUsage(): String {
@@ -33,12 +33,11 @@ class StopCommand(
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
-        val config = plugin.config.access("config")!!
         if (BroadcastingThread.running) {
             BroadcastingThread.stop()
-            sender.sendMessageF(config.getString("Messages.Stopped")!!)
+            sender.sendMessageF(plugin.localization.localize("Stopped")!!)
         } else {
-            sender.sendMessageF(config.getString("Messages.AlreadyStopped")!!)
+            sender.sendMessageF(plugin.localization.localize("AlreadyStopped")!!)
         }
         return true
     }

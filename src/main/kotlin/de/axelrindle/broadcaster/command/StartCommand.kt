@@ -21,7 +21,7 @@ class StartCommand(
     }
 
     override fun getDescription(): String {
-        return "Start the broadcast."
+        return plugin.localization.localize("CommandHelp.Start")!!
     }
 
     override fun getUsage(): String {
@@ -33,12 +33,11 @@ class StartCommand(
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
-        val config = plugin.config.access("config")!!
         if (!BroadcastingThread.running) {
             BroadcastingThread.start()
-            sender.sendMessageF(config.getString("Messages.Started")!!)
+            sender.sendMessageF(plugin.localization.localize("Started")!!)
         } else {
-            sender.sendMessageF(config.getString("Messages.AlreadyRunning")!!)
+            sender.sendMessageF(plugin.localization.localize("Messages.AlreadyRunning")!!)
         }
         return true
     }

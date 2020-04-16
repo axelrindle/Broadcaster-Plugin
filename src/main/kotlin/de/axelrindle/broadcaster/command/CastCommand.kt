@@ -21,7 +21,7 @@ class CastCommand(
     }
 
     override fun getDescription(): String {
-        return "Cast a message around the server."
+        return plugin.localization.localize("CommandHelp.Cast")!!
     }
 
     override fun getPermission(): String {

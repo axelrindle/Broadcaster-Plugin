@@ -1,0 +1,15 @@
+Started: "&aEs werden nun globale Nachrichten gesendet."
+Stopped: "&aEs werden keine globalen Nachrichten mehr gesendet."
+AlreadyRunning: "&cEs werden schon globale Nachrichten gesendet!"
+AlreadyStopped: "&cEs werden keine globalen Nachrichten gesendet!"
+Starting: "&6Es wird versucht, globale Nachrichten zu senden..."
+ReloadStopped: "&cDurch das Neuladen werden keine globalen Nachrichten mehr gesendet!"
+NoPermission: "&cDu hast keine Berechtigung dazu!"
+Arguments: "&cZu wenig Argumente!"
+
+CommandHelp:
+  Brc: "Zeigt eine Liste mit verfügbaren Befehlen an."
+  Cast: "Sende eine eigene Nachricht an alle Spieler."
+  Reload: "Liest die Konfiguration neu ein. Die globalen Nachrichten werden dadurch gestoppt."
+  Start: "Startet das Senden von globalen Nachrichten."
+  Stop: "Stoppt das Senden von globalen Nachrichten"

@@ -19,6 +19,10 @@ class BrcCommand(
         return "brc"
     }
 
+    override fun getDescription(): String {
+        return plugin.localization.localize("CommandHelp.Brc")!!
+    }
+
     override fun getSubCommands(): ArrayList<PocketCommand> {
         return arrayListOf(
                 StartCommand(plugin),
@@ -29,15 +33,14 @@ class BrcCommand(
     }
 
     override fun messageNoPermission(): String {
-        return formatColors(plugin.config.access("config")!!
-                .getString("Messages.NoPermission")!!)
+        return formatColors(plugin.localization.localize("NoPermission")!!)
     }
 
     override fun sendHelp(sender: CommandSender) {
         sender.sendMessageF(CHAT_PREFIX + "Help")
         var i = 0
         if (sender.hasPermission("broadcaster.brc")) {
-            sender.sendMessageF("&9/brc &f- &3Shows all commands")
+            sender.sendMessageF("&9/${getName()} &f- &3${getDescription()}")
             i++
         }
         getSubCommands().forEach {
