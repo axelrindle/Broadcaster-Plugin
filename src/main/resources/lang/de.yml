@@ -10,9 +10,12 @@ Arguments: "&cZu wenig Argumente!"
 
 Words:
   Help: "Hilfe"
+  Status: "Status"
+
 CommandHelp:
   Brc: "Zeigt eine Liste mit verfügbaren Befehlen an."
   Cast: "Sende eine eigene Nachricht an alle Spieler."
   Reload: "Liest die Konfiguration neu ein. Die globalen Nachrichten werden dadurch gestoppt."
   Start: "Startet das Senden von globalen Nachrichten."
-  Stop: "Stoppt das Senden von globalen Nachrichten"
+  Stop: "Stoppt das Senden von globalen Nachrichten."
+  Status: "Zeigt den Status des Plugins an. Zum debuggen benutzt."

@@ -10,9 +10,12 @@ Arguments: "&cToo few arguments!"
 
 Words:
   Help: "Help"
+  Status: "Status"
+
 CommandHelp:
   Brc: "Show a list of available commands."
   Cast: "Cast a custom message around the server."
   Reload: "Reload configuration files from disk. Broadcasting will be stopped."
   Start: "Start the broadcast."
   Stop: "Stop the broadcast."
+  Status: "Show the status of the plugin. Used for debugging."
