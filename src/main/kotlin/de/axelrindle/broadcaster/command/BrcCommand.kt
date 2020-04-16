@@ -47,7 +47,7 @@ class BrcCommand(
             }
         }
 
-        // nothing sent, sent no permission message
+        // nothing sent, send no permission message
         if (i == 0) sender.sendMessage(messageNoPermission())
     }
 }
