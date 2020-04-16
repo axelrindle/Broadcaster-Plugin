@@ -14,7 +14,7 @@ import java.io.IOException
 class Broadcaster : JavaPlugin() {
 
     companion object {
-        const val CHAT_PREFIX = "&2Broadcaster &f> "
+        const val CHAT_PREFIX = "&2Broadcaster &f> &r"
         var instance: Broadcaster? = null
     }
 
