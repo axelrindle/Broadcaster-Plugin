@@ -9,5 +9,8 @@
 Download and infos on BukkitDev:
 https://dev.bukkit.org/projects/broadcaster-plugin
 
+# Dependencies
+- [PocketKnife](https://github.com/axelrindle/PocketKnife/)
+
 ## License
 [MIT](LICENSE)
