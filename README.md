@@ -7,8 +7,9 @@
 
 > Simple broadcasting on your server.
 
-Download and infos on BukkitDev:
-https://dev.bukkit.org/projects/broadcaster-plugin
+[Detailed info on BukkitDev](https://dev.bukkit.org/projects/broadcaster-plugin)
+&bull;
+[Download latest version](https://github.com/axelrindle/Broadcaster-Plugin/releases/latest)
 
 ## Dependencies
 - [PocketKnife](https://github.com/axelrindle/PocketKnife/)
