@@ -2,6 +2,7 @@ package de.axelrindle.broadcaster.util
 
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
+import me.clip.placeholderapi.PlaceholderAPI
 import org.apache.commons.lang.StringUtils
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -36,6 +37,11 @@ object Formatter {
             message = StringUtils.replace(message, key, value)
         }
         message = formatPredefinedPlaceholders(message)
+
+        // format using PlaceholderAPI
+        if (Broadcaster.instance!!.hasPluginPlaceholderApi) {
+            message = PlaceholderAPI.setPlaceholders(null, message)
+        }
 
         // translate color codes
         message = formatColors(message)

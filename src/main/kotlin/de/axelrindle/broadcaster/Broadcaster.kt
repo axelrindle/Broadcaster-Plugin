@@ -21,6 +21,9 @@ class Broadcaster : JavaPlugin() {
     internal val config = PocketConfig(this)
     internal var localization = PocketLang(this, config)
 
+    internal var hasPluginPlaceholderApi: Boolean = false
+        private set
+
     override fun onEnable() {
         logger.info("Startup...")
 
@@ -51,6 +54,11 @@ class Broadcaster : JavaPlugin() {
 
         // register command
         PocketCommand.register(this, BrcCommand(this))
+
+        // check soft dependencies
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            hasPluginPlaceholderApi = true
+        }
 
         // start casting if we should
         val mainConfig = config.access("config")!!
