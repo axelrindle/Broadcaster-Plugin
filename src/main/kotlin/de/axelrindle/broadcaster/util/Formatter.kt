@@ -26,14 +26,13 @@ object Formatter {
     @Suppress("UNCHECKED_CAST")
     fun format(plugin: Broadcaster, msg: String): String {
         var message = msg
+
         // format placeholders
         val placeholders = plugin.config.access("config")!!
                 .getList("Placeholders") as List<List<String>>
-
         for (holder in placeholders) {
             val key = holder[0]
             val value = holder[1]
-
             message = StringUtils.replace(message, key, value)
         }
         message = formatPredefinedPlaceholders(message)
