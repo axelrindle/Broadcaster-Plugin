@@ -19,7 +19,7 @@ class Broadcaster : JavaPlugin() {
     }
 
     internal val config = PocketConfig(this)
-    internal var localization = PocketLang(this, config)
+    internal val localization = PocketLang(this, config)
 
     internal var hasPluginPlaceholderApi: Boolean = false
         private set
