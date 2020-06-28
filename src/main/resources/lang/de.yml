@@ -18,4 +18,4 @@ CommandHelp:
   Reload: "Liest die Konfiguration neu ein. Die globalen Nachrichten werden dadurch gestoppt."
   Start: "Startet das Senden von globalen Nachrichten."
   Stop: "Stoppt das Senden von globalen Nachrichten."
-  Status: "Zeigt den Status des Plugins an. Zum debuggen benutzt."
+  Status: "Öffnet ein Inventar, über welches das Plugin gesteuert werden kann."
