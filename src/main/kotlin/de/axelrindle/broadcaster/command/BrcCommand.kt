@@ -15,6 +15,14 @@ class BrcCommand(
         private val plugin: Broadcaster
 ) : PocketCommand() {
 
+    private val subCommands = arrayListOf(
+            StartCommand(plugin),
+            StopCommand(plugin),
+            ReloadCommand(plugin),
+            CastCommand(plugin),
+            StatusCommand(plugin)
+    )
+
     override fun getName(): String {
         return "brc"
     }
@@ -23,15 +31,7 @@ class BrcCommand(
         return plugin.localization.localize("CommandHelp.Brc")!!
     }
 
-    override fun getSubCommands(): ArrayList<PocketCommand> {
-        return arrayListOf(
-                StartCommand(plugin),
-                StopCommand(plugin),
-                ReloadCommand(plugin),
-                CastCommand(plugin),
-                StatusCommand(plugin)
-        )
-    }
+    override fun getSubCommands(): ArrayList<PocketCommand> = subCommands
 
     override fun messageNoPermission(): String {
         return formatColors(plugin.localization.localize("NoPermission")!!)
