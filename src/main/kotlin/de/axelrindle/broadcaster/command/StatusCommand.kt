@@ -102,15 +102,27 @@ class StatusCommand(
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
-        pocketInventory.open(sender as Player)
+        if (sender is Player) {
+            setStatusItem()
+            pocketInventory.open(sender)
+        } else {
+            val helpText = plugin.localization.localize("Words.Status")!!
+            sender.sendMessageF(Broadcaster.CHAT_PREFIX + helpText)
+
+            sender.sendMessageF("Running: &u" + BroadcastingThread.running)
+            sender.sendMessageF("Paused: &u" + BroadcastingThread.paused)
+
+            val amountMessages = plugin.config.access("messages")!!.getStringList("Messages").size
+            sender.sendMessageF("Total messages loaded: &u$amountMessages")
+
+            val description = plugin.description
+            sender.sendMessageF("Version: " + description.version)
+            sender.sendMessageF("API Version: " + description.apiVersion)
+        }
         return true
     }
 
     override fun sendHelp(sender: CommandSender) {
         sender.sendMessageF("&9${getUsage()} &f- &3${getDescription()}")
-    }
-
-    override fun requirePlayer(): Boolean {
-        return true
     }
 }
