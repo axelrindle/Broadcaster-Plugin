@@ -9,4 +9,5 @@ Messages:
   - "&2Thanks for using Broadcaster! &4<3<3<3"
   - "&aSupports &9co&5lo&9rs &aand &6placeholders&a! &8[/]&2[v]&8[/]"
   - "&3Ideas? Suggestion? Visit the project page on BukkitDev and write it in the comments! &e[++]&2[v]&e[++]"
-  - "%c&6&lNow also supporting centered messages.&r"
+  - "%c&6&Centered messages.&r"
+  - "&Now also supporting &b&lPlaceholderAPI &r&2now: &rTPS &8=> &d%server_tps%"
