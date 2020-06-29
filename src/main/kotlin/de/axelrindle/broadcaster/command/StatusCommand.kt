@@ -81,11 +81,8 @@ class StatusCommand(
             })
         }
 
-        if (inventory != null) {
-            inventory.setItem(11, runningStack)
-        } else {
-            pocketInventory.setItem(11, runningStack, listener)
-        }
+        inventory?.setItem(11, runningStack)
+        pocketInventory.setItem(11, runningStack, listener)
     }
 
     override fun getName(): String {
