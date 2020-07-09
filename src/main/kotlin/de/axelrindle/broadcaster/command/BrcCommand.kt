@@ -15,7 +15,7 @@ class BrcCommand(
         private val plugin: Broadcaster
 ) : PocketCommand() {
 
-    private val subCommands = arrayListOf(
+    override val subCommands: ArrayList<PocketCommand> = arrayListOf(
             StartCommand(plugin),
             StopCommand(plugin),
             ReloadCommand(plugin),
@@ -31,8 +31,6 @@ class BrcCommand(
         return plugin.localization.localize("CommandHelp.Brc")!!
     }
 
-    override fun getSubCommands(): ArrayList<PocketCommand> = subCommands
-
     override fun messageNoPermission(): String {
         return formatColors(plugin.localization.localize("NoPermission")!!)
     }
@@ -45,7 +43,7 @@ class BrcCommand(
             sender.sendMessageF("&9/${getName()} &f- &3${getDescription()}")
             i++
         }
-        getSubCommands().forEach {
+        subCommands.forEach {
             if (it.getPermission() == null || sender.hasPermission(it.getPermission()!!)) {
                 it.sendHelp(sender)
                 i++
