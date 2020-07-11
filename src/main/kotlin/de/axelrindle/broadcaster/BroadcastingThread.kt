@@ -18,8 +18,6 @@ object BroadcastingThread {
 
     private var id: Int = 0
     private var index = 0
-    private var maxIndex: Int = 0
-    private var randomize: Boolean = false
     private var lastRandomIndex: Int = 0
     internal var running = false
         private set
