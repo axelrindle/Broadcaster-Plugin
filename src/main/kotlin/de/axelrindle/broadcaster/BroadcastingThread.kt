@@ -1,14 +1,24 @@
 package de.axelrindle.broadcaster
 
+import de.axelrindle.broadcaster.model.JsonMessage
+import de.axelrindle.broadcaster.model.Message
+import de.axelrindle.broadcaster.model.SimpleMessage
 import de.axelrindle.broadcaster.util.Align
 import de.axelrindle.broadcaster.util.Formatter
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.BaseComponent
+import net.md_5.bungee.api.chat.TextComponent
 import org.apache.commons.lang.math.RandomUtils
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import java.io.File
+import java.io.FileReader
+import java.util.*
+import java.util.stream.Collectors
 
 /**
  * The [BroadcastingThread] class is responsible for starting and stopping for
@@ -23,6 +33,8 @@ object BroadcastingThread {
         private set
     internal var paused = false
 
+    private val spaceComponent = TextComponent.fromLegacyText(" ")
+
     /**
      * Starts the scheduled message broadcast.
      */
@@ -32,12 +44,38 @@ object BroadcastingThread {
 
         // config options
         val plugin = Broadcaster.instance!!
-        val messages = plugin.config.access("messages")!!.getStringList("Messages")
         val interval = plugin.config.access("config")!!.getInt("Cast.Interval")
+        val messages = plugin.config.access("messages")!!.getList("Messages")!!
+                .stream()
+                .map {
+                    when (it) {
+                        is String -> SimpleMessage(it)
+                        is LinkedHashMap<*, *> -> {
+                            if (it.containsKey("Type").not()) return@map null
 
+                            return@map when (it["Type"].toString().toLowerCase(Locale.ENGLISH)) {
+                                "json" -> {
+                                    val file = File(plugin.dataFolder, "json/" + it["Definition"].toString() + ".json")
+                                    val content = FileReader(file).use(FileReader::readText)
+                                    JsonMessage(content)
+                                }
+                                else -> {
+                                    plugin.logger.warning("Invalid message type \"${it["Type"]}\"! " +
+                                            "Currently only \"json\" is supported.")
+                                    null
+                                }
+                            }
+                        }
+                        else -> null
+                    }
+                }
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList())
+
+        @Suppress("UNCHECKED_CAST")
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
-                getRunnable(plugin, messages),
+                getRunnable(plugin, messages as List<Message>),
                 interval * 20L,
                 interval * 20L // 20L is one "Tick" (Minecraft Second) in Minecraft. To calculate the period, we need to multiply the interval seconds with the length of one Tick.
         )
@@ -58,23 +96,35 @@ object BroadcastingThread {
             index = 0
     }
 
-    private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
+    private fun getRunnable(plugin: Broadcaster, messages: List<Message>): Runnable {
         val config = plugin.config.access("config")!!
         val prefix = formatColors(config.getString("Cast.Prefix")!!)
         val needsPermission = config.getBoolean("Cast.NeedPermissionToSee")
         val randomize = config.getBoolean("Cast.Randomize")
         val maxIndex = messages.size
 
+        val prefixComponent = TextComponent.fromLegacyText(prefix)
+
         return Runnable {
             // get a message
-            var message = if (randomize) getRandomMessage(messages) else messages[index]
-            message = Formatter.format(plugin, message)
+            val theMessage = if (randomize) getRandomMessage(messages) else messages[index]
 
-            // check for center alignment
-            if (message.startsWith("%c")) {
-                sendCentered(prefix, message.replace("%c", ""), needsPermission)
-            } else {
-                broadcast("$prefix $message", getPermission(needsPermission))
+            // further actions depend on the message type
+            if (theMessage is SimpleMessage) {
+                val message = Formatter.format(plugin, theMessage.getText())
+
+                // check for center alignment
+                if (message.startsWith("%c")) {
+                    sendCentered(prefix, message.replace("%c", ""), needsPermission)
+                } else {
+                    broadcast("$prefix $message", getPermission(needsPermission))
+                }
+            }
+            else if (theMessage is JsonMessage) {
+                val components = prefixComponent
+                        .plus(spaceComponent)
+                        .plus(theMessage.components)
+                broadcastComponent(components, getPermission(needsPermission))
             }
 
             // don't change index if randomizing
@@ -96,11 +146,20 @@ object BroadcastingThread {
         }
     }
 
-    private fun broadcast(message: String, permission: String? = null) {
+    private fun broadcast(message: String, permission: String?) {
         if (permission == null)
             Bukkit.broadcastMessage(message)
         else
             Bukkit.broadcast(message, permission)
+    }
+
+    private fun broadcastComponent(components: Array<BaseComponent>, permission: String?) {
+        Bukkit.getConsoleSender().spigot().sendMessage(*components)
+        Bukkit.getServer().onlinePlayers.forEach { player ->
+            if (permission == null || player.hasPermission(permission) || player.isOp) {
+                player.spigot().sendMessage(ChatMessageType.CHAT, *components)
+            }
+        }
     }
 
     /**
@@ -109,7 +168,7 @@ object BroadcastingThread {
      * @param messages A [List] of messages.
      * @return A randomly selected message.
      */
-    private fun getRandomMessage(messages: List<String>): String {
+    private fun getRandomMessage(messages: List<Message>): Message {
         // get a random index
         val rand = RandomUtils.nextInt(messages.size)
 
