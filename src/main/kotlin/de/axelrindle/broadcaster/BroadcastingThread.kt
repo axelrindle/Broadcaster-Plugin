@@ -61,16 +61,16 @@ object BroadcastingThread {
     }
 
     private fun getRunnable(plugin: Broadcaster, messages: List<String>): Runnable {
-        maxIndex = messages.size
-        randomize = plugin.config.access("config")!!.getBoolean("Cast.Randomize")
+        val config = plugin.config.access("config")!!
+        val prefix = formatColors(config.getString("Cast.Prefix")!!)
+        val needsPermission = config.getBoolean("Cast.NeedPermissionToSee")
+        val randomize = config.getBoolean("Cast.Randomize")
+        val maxIndex = messages.size
+
         return Runnable {
             // get a message
             var message = if (randomize) getRandomMessage(messages) else messages[index]
             message = Formatter.format(plugin, message)
-
-            // config
-            val prefix = formatColors(plugin.config.access("config")!!.getString("Cast.Prefix")!!)
-            val needsPermission = plugin.config.access("config")!!.getBoolean("Cast.NeedPermissionToSee")
 
             // check for center alignment
             if (message.startsWith("%c")) {
