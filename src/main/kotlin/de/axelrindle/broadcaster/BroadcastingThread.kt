@@ -115,7 +115,7 @@ object BroadcastingThread {
 
                 // check for center alignment
                 if (message.startsWith("%c")) {
-                    sendCentered(prefix, message.replace("%c", ""), needsPermission)
+                    broadcastCentered(prefix, message.replace("%c", ""), needsPermission)
                 } else {
                     broadcast("$prefix $message", getPermission(needsPermission))
                 }
@@ -138,19 +138,19 @@ object BroadcastingThread {
         return if (needsPermission) "broadcaster.see" else null
     }
 
-    private fun sendCentered(prefix: String, message: String, needsPermission: Boolean) {
-        val permission = getPermission(needsPermission)
-        val list = Align.center(message, prefix)
-        list.forEach {
-            broadcast("$prefix $it", permission)
-        }
-    }
-
     private fun broadcast(message: String, permission: String?) {
         if (permission == null)
             Bukkit.broadcastMessage(message)
         else
             Bukkit.broadcast(message, permission)
+    }
+
+    private fun broadcastCentered(prefix: String, message: String, needsPermission: Boolean) {
+        val permission = getPermission(needsPermission)
+        val list = Align.center(message, prefix)
+        list.forEach {
+            broadcast("$prefix $it", permission)
+        }
     }
 
     private fun broadcastComponent(components: Array<BaseComponent>, permission: String?) {
