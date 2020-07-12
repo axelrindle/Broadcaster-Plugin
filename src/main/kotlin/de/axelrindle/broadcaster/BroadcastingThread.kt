@@ -11,6 +11,7 @@ import net.md_5.bungee.api.chat.BaseComponent
 import net.md_5.bungee.api.chat.TextComponent
 import org.apache.commons.lang.math.RandomUtils
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -189,6 +190,10 @@ object BroadcastingThread {
      */
     class EventListener : Listener {
 
+        /**
+         * Called when a [Player] joins the server. Used to resume the broadcast if it has
+         * been paused due to no players being online.
+         */
         @EventHandler
         fun onPlayerJoin(event: PlayerJoinEvent) {
             if (paused) {
@@ -196,6 +201,10 @@ object BroadcastingThread {
             }
         }
 
+        /**
+         * Called when a [Player] leaves the server. Used to pause the broadcast if no players
+         * are online anymore.
+         */
         @EventHandler
         fun onPlayerQuit(event: PlayerQuitEvent) {
             val pauseOnEmpty = Broadcaster.instance!!.config.access("config")!!

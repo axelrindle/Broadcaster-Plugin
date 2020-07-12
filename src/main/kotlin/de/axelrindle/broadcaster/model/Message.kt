@@ -16,6 +16,12 @@ abstract class Message
  * A `SimpleMessage` is just a container for holding a plain text message.
  */
 class SimpleMessage(input: String) : Message(input) {
+
+    /**
+     * Returns just the input string to use as the message text.
+     *
+     * @return The [input].
+     */
     fun getText(): String = input
 }
 
