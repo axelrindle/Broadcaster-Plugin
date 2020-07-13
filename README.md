@@ -12,7 +12,17 @@
 [Download latest version](https://github.com/axelrindle/Broadcaster-Plugin/releases/latest)
 
 ## Dependencies
+
 - [PocketKnife](https://github.com/axelrindle/PocketKnife/)
 
+## Resources
+
+Here are some links & files that you should definetly check out!
+
+- [Version Support](SUPPORT.md) - States which Spigot versions are supported
+
+- [The Wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki) - Provides migration guides and other useful resources
+
 ## License
+
 [MIT](LICENSE)
