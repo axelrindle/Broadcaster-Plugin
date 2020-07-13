@@ -2,6 +2,7 @@ package de.axelrindle.broadcaster
 
 import de.axelrindle.broadcaster.model.JsonMessage
 import de.axelrindle.broadcaster.model.Message
+import de.axelrindle.broadcaster.model.MessageMapper
 import de.axelrindle.broadcaster.model.SimpleMessage
 import de.axelrindle.broadcaster.util.Align
 import de.axelrindle.broadcaster.util.Formatter
@@ -16,8 +17,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import java.io.File
-import java.io.FileReader
 import java.util.*
 import java.util.stream.Collectors
 
@@ -46,30 +45,10 @@ object BroadcastingThread {
         // config options
         val plugin = Broadcaster.instance!!
         val interval = plugin.config.access("config")!!.getInt("Cast.Interval")
-        val messages = plugin.config.access("messages")!!.getList("Messages")!!
+        val messages = plugin.config.access("messages")!!
+                .getList("Messages", emptyList<Message>())!!
                 .stream()
-                .map {
-                    when (it) {
-                        is String -> SimpleMessage(it)
-                        is LinkedHashMap<*, *> -> {
-                            if (it.containsKey("Type").not()) return@map null
-
-                            return@map when (it["Type"].toString().toLowerCase(Locale.ENGLISH)) {
-                                "json" -> {
-                                    val file = File(plugin.dataFolder, "json/" + it["Definition"].toString() + ".json")
-                                    val content = FileReader(file).use(FileReader::readText)
-                                    JsonMessage(content)
-                                }
-                                else -> {
-                                    plugin.logger.warning("Invalid message type \"${it["Type"]}\"! " +
-                                            "Currently only \"json\" is supported.")
-                                    null
-                                }
-                            }
-                        }
-                        else -> null
-                    }
-                }
+                .map(MessageMapper::mapConfigEntry)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList())
 
