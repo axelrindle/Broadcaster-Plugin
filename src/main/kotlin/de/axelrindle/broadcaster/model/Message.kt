@@ -32,5 +32,11 @@ class SimpleMessage(input: String) : Message(input) {
  * @see BaseComponent
  */
 class JsonMessage(input: String) : Message(input) {
+
+    // test for class dependency
+    init {
+        Class.forName("net.md_5.bungee.chat.ComponentSerializer")
+    }
+
     val components: Array<BaseComponent> = ComponentSerializer.parse(input)
 }
