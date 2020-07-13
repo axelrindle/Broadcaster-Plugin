@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 - Support for `PlaceholderAPI` has been added. All **non-Player related** placeholders can be used
-- Added support for JSON formatted messages. See #20 for details and [the wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki/Broadcasting-JSON-formatted-messages) for a guide on how to use the feature
+- Added support for JSON formatted messages. See #20, #21 for details and [the wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki/Broadcasting-JSON-formatted-messages) for a guide on how to use the feature
 
 ### Changed
 
