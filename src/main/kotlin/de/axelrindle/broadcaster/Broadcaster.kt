@@ -63,12 +63,16 @@ class Broadcaster : JavaPlugin() {
         // start casting if we should
         val mainConfig = config.access("config")!!
         val pauseOnEmptyServer = mainConfig.getBoolean("Cast.PauseOnEmptyServer")
+
+        if (pauseOnEmptyServer) {
+            Bukkit.getPluginManager().registerEvents(BroadcastingThread.EventListener(), this)
+        }
+
         if (mainConfig.getBoolean("Cast.OnServerStart")) {
 
             // if the broadcast should be paused on empty server, start with an initial pause,
             // because no player will be online immediately after server start
             if (pauseOnEmptyServer) {
-                Bukkit.getPluginManager().registerEvents(BroadcastingThread.EventListener(), this)
                 BroadcastingThread.paused = true
             }
 
