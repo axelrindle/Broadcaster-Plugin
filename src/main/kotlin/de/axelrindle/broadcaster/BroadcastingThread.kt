@@ -33,7 +33,7 @@ object BroadcastingThread {
         private set
     internal var paused = false
 
-    private val spaceComponent = TextComponent.fromLegacyText(" ")
+    private val spaceComponent = TextComponent(" ")
 
     /**
      * Starts the scheduled message broadcast.
