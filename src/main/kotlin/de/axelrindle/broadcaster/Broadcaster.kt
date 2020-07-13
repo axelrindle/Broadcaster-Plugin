@@ -49,8 +49,11 @@ class Broadcaster : JavaPlugin() {
         }
 
         // localization init
+        logger.info("Loading localization...")
         localization.addLanguages("en", "de")
         localization.init()
+
+        logger.info("Initializing main functionality...")
 
         // register command
         PocketCommand.register(this, BrcCommand(this))
