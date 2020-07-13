@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 - Dependency on [PocketKnife v1.3.0](https://github.com/axelrindle/PocketKnife/releases/tag/1.3.0)
+- Implemented localization (Supporting German & English for now)
 - Support for centered messages
 
 ### Changed
