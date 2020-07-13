@@ -176,6 +176,7 @@ object BroadcastingThread {
         @EventHandler
         fun onPlayerJoin(event: PlayerJoinEvent) {
             if (paused) {
+                Broadcaster.instance!!.logger.info("Broadcasting resumed.")
                 start()
             }
         }
