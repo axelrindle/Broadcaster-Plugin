@@ -11,7 +11,7 @@ Note that this document always applies to the **latest released version of the p
 
 | Spigot Version | Supported |
 | ------- | ------------------ |
-| 1.16.x   | :large_orange_diamond: |
+| 1.16.x   | :construction: |
 | 1.15.x   | :heavy_check_mark: |
 | 1.14.x   | :heavy_check_mark: |
 | 1.13.x   | :heavy_check_mark: |
@@ -25,6 +25,7 @@ Symbol meanings:
 | :heavy_check_mark: | Officially supported. This version is being actively tested. |
 | :large_orange_diamond: | Should be generally supported, but it's not being tested. |
 | :x: | Not supported. Stability and/or functionality is not guaranteed. |
+| :construction: | Support for this version is currently in planning or already being tested. |
 
 ## Reporting issues or vulnerabilities
 
