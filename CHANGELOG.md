@@ -9,12 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 - Support for `PlaceholderAPI` has been added. All **non-Player related** placeholders can be used
-- Added support for JSON formatted messages. See #20, #21 for details and [the wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki/Broadcasting-JSON-formatted-messages) for a guide on how to use the feature
+- Added support for JSON formatted messages. See [#20](https://github.com/axelrindle/Broadcaster-Plugin/issues/20), [#21](https://github.com/axelrindle/Broadcaster-Plugin/issues/21) for details and [the wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki/Broadcasting-JSON-formatted-messages) for a guide on how to use the feature
 
 ### Changed
 
 - Dependency on [PocketKnife v2.0.0](https://axelrindle.github.io/PocketKnife/wiki/migration/2-0-0/)
 - The `/brc status` command now shows a fancy GUI when executed by a Player. The console still receives the text output
+
+### Removed
+
+- Dropped support for Spigot version below 1.13
+
+### Fixed
+
+- Support for Spigot 1.13 - 1.16 has been added
 
 ## v2.2.0 `(16.04.2020)`
 
