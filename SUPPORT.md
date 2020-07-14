@@ -14,9 +14,8 @@ Note that this document always applies to the **latest released version of the p
 | 1.16.x   | :construction: |
 | 1.15.x   | :heavy_check_mark: |
 | 1.14.x   | :heavy_check_mark: |
-| 1.13.x   | :heavy_check_mark: |
-| 1.12.x   | :large_orange_diamond: |
-| < 1.12.x   | :x: |
+| 1.13.x   | :construction: |
+| <= 1.12.x   | :x: |
 
 Symbol meanings:
 
