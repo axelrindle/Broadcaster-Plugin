@@ -32,6 +32,8 @@ object BroadcastingThread {
     internal var running = false
         private set
     internal var paused = false
+    internal var messages: List<Message> = emptyList()
+        private set
 
     private val spaceComponent = TextComponent(" ")
 
@@ -45,17 +47,17 @@ object BroadcastingThread {
         // config options
         val plugin = Broadcaster.instance!!
         val interval = plugin.config.access("config")!!.getInt("Cast.Interval")
-        val messages = plugin.config.access("messages")!!
+        messages = plugin.config.access("messages")!!
                 .getList("Messages", emptyList<Message>())!!
                 .stream()
                 .map(MessageMapper::mapConfigEntry)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList())
+                .collect(Collectors.toList<Message>())
 
         @Suppress("UNCHECKED_CAST")
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
-                getRunnable(plugin, messages as List<Message>),
+                getRunnable(plugin, messages),
                 interval * 20L,
                 interval * 20L // 20L is one "Tick" (Minecraft Second) in Minecraft. To calculate the period, we need to multiply the interval seconds with the length of one Tick.
         )
