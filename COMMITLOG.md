@@ -1,6 +1,39 @@
 # Commitlog
 This changelog-similar file documents commits that happened inside the `src/` directory.
 
+## v2.3.0 `(14.07.2020)`
+Total changes in this version: 29
+
+- Also fix message amount for the gui
+- Change api-version to 1.13
+- Fix color formatting
+- Outsource message loading to an extra method
+- Get message amount from attribute
+- Space between private and internal attributes
+- Fix list type being nullable
+- Create example file for json message type
+- Add some more log messages
+- Add a log message when resuming the broadcast
+- Create instance directly
+- Outsource message mapping to own class and catch exceptions
+- Test whether required class exists
+- Fix pause listener not being registered when OnServerStart is false
+- Add documentation to public methods
+- Rename method sendCentered to broadcastCentered
+- Implement #20
+- Remove unused attributes
+- Create message definitions
+- Simplify runnable config
+- Apply API changes
+- Update messages.yml
+- When not a player, just send the text version (as before)
+- Always update the pocketInventory
+- Replace getSubCommands() with a class attribute
+- Replace status messages with a fancy GUI
+- Update Formatter.kt
+- Use val instead of var
+- Add support for using PlaceholderAPI
+
 ## v2.2.0 `(16.04.2020)`
 Total changes in this version: 18
 
