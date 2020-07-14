@@ -7,6 +7,7 @@ import de.axelrindle.pocketknife.PocketInventory
 import de.axelrindle.pocketknife.util.InventoryUtils.makeStack
 import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -109,20 +110,28 @@ class StatusCommand(
             val helpText = plugin.localization.localize("Words.Status")!!
             sender.sendMessageF(Broadcaster.CHAT_PREFIX + helpText)
 
-            sender.sendMessageF("Running: &u" + BroadcastingThread.running)
-            sender.sendMessageF("Paused: &u" + BroadcastingThread.paused)
+            sender.sendMessageF("Running: " + formatBoolean(BroadcastingThread.running))
+            sender.sendMessageF("Paused: " + formatBoolean(BroadcastingThread.paused))
 
             val amountMessages = BroadcastingThread.messages.size
-            sender.sendMessageF("Total messages loaded: &u$amountMessages")
+            sender.sendMessageF("Total messages loaded: &6$amountMessages")
 
             val description = plugin.description
-            sender.sendMessageF("Version: " + description.version)
-            sender.sendMessageF("API Version: " + description.apiVersion)
+            sender.sendMessageF("Version: &a" + description.version)
+            sender.sendMessageF("API Version: &a" + description.apiVersion)
         }
         return true
     }
 
     override fun sendHelp(sender: CommandSender) {
         sender.sendMessageF("&9${getUsage()} &f- &3${getDescription()}")
+    }
+
+    private fun formatBoolean(
+            boolean: Boolean,
+            colorTrue: ChatColor = ChatColor.GREEN,
+            colorFalse: ChatColor = ChatColor.RED
+    ): String {
+        return if (boolean) "${colorTrue}${boolean}" else "${colorFalse}${boolean}"
     }
 }
