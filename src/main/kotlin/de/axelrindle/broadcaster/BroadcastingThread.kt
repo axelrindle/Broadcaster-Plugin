@@ -29,6 +29,7 @@ object BroadcastingThread {
     private var id: Int = 0
     private var index = 0
     private var lastRandomIndex: Int = 0
+
     internal var running = false
         private set
     internal var paused = false
