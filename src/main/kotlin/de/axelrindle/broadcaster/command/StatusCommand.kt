@@ -38,7 +38,7 @@ class StatusCommand(
         setStatusItem()
 
         // message amount
-        val amountMessages = plugin.config.access("messages")!!.getStringList("Messages").size
+        val amountMessages = BroadcastingThread.messages.size
         val messagesLore = arrayOf(
                 "$amountMessages loaded"
         )
