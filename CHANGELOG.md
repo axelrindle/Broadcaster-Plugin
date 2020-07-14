@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## v2.3.0 `(14.07.2020)`
 
 ### Added
 
@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 
-- Dependency on [PocketKnife v2.0.0](https://axelrindle.github.io/PocketKnife/wiki/migration/2-0-0/)
+- Dependency on [PocketKnife v2.0.0](https://github.com/axelrindle/PocketKnife/releases/tag/2.0.0)
 - The `/brc status` command now shows a fancy GUI when executed by a Player. The console still receives the text output
 
 ### Removed
