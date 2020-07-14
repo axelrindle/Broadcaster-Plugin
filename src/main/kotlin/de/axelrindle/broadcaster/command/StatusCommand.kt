@@ -112,7 +112,7 @@ class StatusCommand(
             sender.sendMessageF("Running: &u" + BroadcastingThread.running)
             sender.sendMessageF("Paused: &u" + BroadcastingThread.paused)
 
-            val amountMessages = plugin.config.access("messages")!!.getStringList("Messages").size
+            val amountMessages = BroadcastingThread.messages.size
             sender.sendMessageF("Total messages loaded: &u$amountMessages")
 
             val description = plugin.description
