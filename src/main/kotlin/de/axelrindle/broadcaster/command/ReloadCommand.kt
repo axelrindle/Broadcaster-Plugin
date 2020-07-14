@@ -42,6 +42,7 @@ class ReloadCommand(
         // reload configurations
         try {
             plugin.config.reloadAll()
+            BroadcastingThread.loadMessages()
             sender.sendMessageF("&aSuccessfully reloaded.")
         } catch (e: IOException) {
             sender.sendMessageF("&cAn error occurred! Check the console! Disabling now...")

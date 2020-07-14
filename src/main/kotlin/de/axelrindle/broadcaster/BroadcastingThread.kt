@@ -26,6 +26,9 @@ import java.util.stream.Collectors
  */
 object BroadcastingThread {
 
+    private val plugin: Broadcaster
+        get() = Broadcaster.instance!!
+
     private var id: Int = 0
     private var index = 0
     private var lastRandomIndex: Int = 0
@@ -39,6 +42,19 @@ object BroadcastingThread {
     private val spaceComponent = TextComponent(" ")
 
     /**
+     * Reads entries from the `messages.yml` file and maps the to their
+     * respective [Message] object representation.
+     */
+    fun loadMessages() {
+        messages = plugin.config.access("messages")!!
+                .getList("Messages", emptyList<Message>())!!
+                .stream()
+                .map(MessageMapper::mapConfigEntry)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList<Message>())
+    }
+
+    /**
      * Starts the scheduled message broadcast.
      */
     fun start() {
@@ -46,16 +62,7 @@ object BroadcastingThread {
         paused = false
 
         // config options
-        val plugin = Broadcaster.instance!!
         val interval = plugin.config.access("config")!!.getInt("Cast.Interval")
-        messages = plugin.config.access("messages")!!
-                .getList("Messages", emptyList<Message>())!!
-                .stream()
-                .map(MessageMapper::mapConfigEntry)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList<Message>())
-
-        @Suppress("UNCHECKED_CAST")
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 plugin,
                 getRunnable(plugin, messages),

@@ -45,6 +45,7 @@ class Broadcaster : JavaPlugin() {
         try {
             config.register("config", getResource("config.yml")!!)
             config.register("messages", getResource("messages.yml")!!)
+            BroadcastingThread.loadMessages()
         } catch (e: IOException) {
             logger.severe("Failed to load configuration files!")
             logger.severe(e.message)
