@@ -24,6 +24,14 @@ Here are some links & files that you should definetly check out!
 
 - [The Wiki](https://github.com/axelrindle/Broadcaster-Plugin/wiki) - Provides migration guides and other useful resources
 
+## Contributing
+
+Pull requests are welcome. Please make sure to follow the same code style as found in the existing source code.
+
+### Localization
+
+If you want to translate the plugin into a new language, [head over to GitLocalize](https://gitlocalize.com/repo/5025).
+
 ## License
 
 [MIT](LICENSE)
