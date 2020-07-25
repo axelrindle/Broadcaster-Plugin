@@ -40,6 +40,9 @@ class Broadcaster : JavaPlugin() {
             return
         }
 
+        // manually create example json file
+        createJsonExample()
+
         // loading configuration files
         logger.info("Loading configuration...")
         try {
@@ -52,9 +55,6 @@ class Broadcaster : JavaPlugin() {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
-
-        // manually create example json file
-        createJsonExample()
 
         // localization init
         logger.info("Loading localization...")
