@@ -28,8 +28,13 @@
 [Download latest version](https://github.com/axelrindle/Broadcaster-Plugin/releases/latest)
 
 ## Dependencies
+### Required
 
-- [PocketKnife](https://github.com/axelrindle/PocketKnife/)
+- [PocketKnife v2.0.0](https://github.com/axelrindle/PocketKnife/)
+
+### Optional
+
+- [PlaceholderAPI v2.10.3](https://github.com/PlaceholderAPI/PlaceholderAPI)
 
 ## Resources
 
