@@ -10,8 +10,8 @@ assignees: ''
 **Version information**
 | Component | Version |
 | ---- | ---- |
-| Plugin (`/brc status`) | `__________` |
-| Bukkit/Spigot (usually accessible using `/version` or `/about`) | `__________` |
+| Plugin (`/brc status`) | `INSERT PLUGIN VERSION HERE` |
+| Bukkit/Spigot (usually accessible using `/version` or `/about`) | `INSERT SERVER VERSION HERE` |
 
 **Bug description**
 Describe what you were doing and what happened. Include any relevant error stacktraces or logging output.
