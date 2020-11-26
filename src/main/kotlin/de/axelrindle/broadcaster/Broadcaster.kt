@@ -7,9 +7,7 @@ import de.axelrindle.pocketknife.PocketLang
 import org.apache.commons.io.IOUtils
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.nio.charset.StandardCharsets
 
 /**
@@ -40,15 +38,14 @@ class Broadcaster : JavaPlugin() {
             return
         }
 
-        // manually create example json file
-        createJsonExample()
-
         // loading configuration files
         logger.info("Loading configuration...")
         try {
             config.register("config", getResource("config.yml")!!)
             config.register("messages", getResource("messages.yml")!!)
-            BroadcastingThread.loadMessages()
+
+            // manually create example json file
+            createJsonExample()
         } catch (e: IOException) {
             logger.severe("Failed to load configuration files!")
             logger.severe(e.message)
@@ -62,6 +59,9 @@ class Broadcaster : JavaPlugin() {
         localization.init()
 
         logger.info("Initializing main functionality...")
+
+        BroadcastingThread.loadMessages()
+        logger.info("Loaded " + BroadcastingThread.messages.size + " messages.")
 
         // register command
         PocketCommand.register(this, BrcCommand(this))
@@ -104,7 +104,7 @@ class Broadcaster : JavaPlugin() {
             val jsonDir = File(dataFolder, "json")
             success = success && jsonDir.mkdir()
 
-            val jsonFile = File(dataFolder, "json/visit-github.json")
+            val jsonFile = File(jsonDir, "visit-github.json")
             success = success && jsonFile.createNewFile()
             FileOutputStream(jsonFile).use { fos ->
                 javaClass.getResourceAsStream("/json/visit-github.json").use { fis ->
