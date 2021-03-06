@@ -4,9 +4,11 @@ import de.axelrindle.broadcaster.command.BrcCommand
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.PocketConfig
 import de.axelrindle.pocketknife.PocketLang
+import net.milkbowl.vault.permission.Permission
 import org.apache.commons.io.IOUtils
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginDescriptionFile
+import org.bukkit.plugin.RegisteredServiceProvider
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.plugin.java.JavaPluginLoader
 import java.io.*
@@ -40,6 +42,12 @@ class Broadcaster : JavaPlugin {
 
     internal var hasPluginPlaceholderApi: Boolean = false
         private set
+    internal var hasPluginVault: Boolean = false
+        private set
+
+    private var _permission: Permission? = null
+    internal val permission: Permission
+        get() = _permission!!
 
     override fun onEnable() {
         logger.info("Startup...")
@@ -84,6 +92,11 @@ class Broadcaster : JavaPlugin {
         // check soft dependencies
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             hasPluginPlaceholderApi = true
+            logger.info("Connected with PlaceholderAPI.")
+        }
+        if (setupPermissions()) {
+            hasPluginVault = true
+            logger.info("Connected with VaultAPI.")
         }
 
         // start casting if we should
@@ -140,6 +153,12 @@ class Broadcaster : JavaPlugin {
                 logger.warning("Failed to create example file!")
             }
         }
+    }
+
+    private fun setupPermissions(): Boolean {
+        val rsp: RegisteredServiceProvider<Permission>? = server.servicesManager.getRegistration(Permission::class.java)
+        _permission = rsp?.provider
+        return _permission != null
     }
 
     override fun onDisable() {
