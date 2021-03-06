@@ -1,5 +1,5 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.3.31"
+    id 'org.jetbrains.kotlin.jvm'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -22,11 +22,10 @@ repositories {
 }
 
 dependencies {
-    // Kotlin stdlib
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.31"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
 
     // APIs
-    compileOnly 'org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT'
+    compileOnly "org.spigotmc:spigot-api:$version_spigot"
     compileOnly 'com.github.axelrindle:PocketKnife:2.0.0'
     compileOnly 'me.clip:placeholderapi:2.10.3'
 }
