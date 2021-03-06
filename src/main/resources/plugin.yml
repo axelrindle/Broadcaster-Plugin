@@ -3,7 +3,6 @@ version: @VERSION@
 main: de.axelrindle.broadcaster.Broadcaster
 author: Axel Rindle
 website: http://dev.bukkit.org/bukkit-plugins/Broadcaster-Plugin
-depend: [PocketKnife]
 softdepend: [PlaceholderAPI]
 api-version: 1.13
 commands:
