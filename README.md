@@ -6,7 +6,7 @@
     <a href="https://github.com/axelrindle/Broadcaster-Plugin/actions?query=workflow%3ABuild">
         <img src="https://github.com/axelrindle/Broadcaster-Plugin/workflows/Build/badge.svg" alt="Build Status">
     </a>
-    <a href="https://www.codacy.com/app/axel.rindle/Broadcaster-Plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=axelrindle/Broadcaster-Plugin&amp;utm_campaign=Badge_Grade">
+    <a href="https://www.codacy.com/app/axelrindle/Broadcaster-Plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=axelrindle/Broadcaster-Plugin&amp;utm_campaign=Badge_Grade">
         <img src="https://api.codacy.com/project/badge/Grade/7a35936d4add49e8b636c9a2140e8561" alt="Codacy Bade">
     </a>
     <a href="https://gitlocalize.com/repo/5025/whole_project?utm_source=badge">
