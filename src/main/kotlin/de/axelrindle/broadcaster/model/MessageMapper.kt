@@ -1,6 +1,6 @@
 package de.axelrindle.broadcaster.model
 
-import de.axelrindle.broadcaster.Broadcaster
+import de.axelrindle.broadcaster.plugin
 import org.bukkit.configuration.ConfigurationSection
 import java.io.File
 import java.util.*
@@ -16,9 +16,6 @@ object MessageMapper {
     private enum class ExtraSupportedMessageTypes {
         JSON
     }
-
-    private val plugin: Broadcaster
-        get() = Broadcaster.instance!!
 
     /**
      * Tries to map an entry from the `messages.yml` file.

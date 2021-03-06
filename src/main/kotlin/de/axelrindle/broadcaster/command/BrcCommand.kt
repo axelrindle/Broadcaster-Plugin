@@ -1,26 +1,24 @@
 package de.axelrindle.broadcaster.command
 
-import de.axelrindle.broadcaster.Broadcaster
+import de.axelrindle.broadcaster.Broadcaster.Companion.CHAT_PREFIX
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
-import de.axelrindle.broadcaster.Broadcaster.Companion.CHAT_PREFIX
 
 /**
  * The main [CommandExecutor] for the plugin.
  */
-class BrcCommand(
-        private val plugin: Broadcaster
-) : PocketCommand() {
+class BrcCommand : PocketCommand() {
 
     override val subCommands: ArrayList<PocketCommand> = arrayListOf(
-            StartCommand(plugin),
-            StopCommand(plugin),
-            ReloadCommand(plugin),
-            CastCommand(plugin),
-            StatusCommand(plugin)
+            StartCommand(),
+            StopCommand(),
+            ReloadCommand(),
+            CastCommand(),
+            StatusCommand()
     )
 
     override fun getName(): String {

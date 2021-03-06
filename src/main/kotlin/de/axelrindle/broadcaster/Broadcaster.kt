@@ -17,7 +17,9 @@ class Broadcaster : JavaPlugin() {
 
     companion object {
         const val CHAT_PREFIX = "&2Broadcaster &f> &r"
-        var instance: Broadcaster? = null
+        private var instance: Broadcaster? = null
+
+        fun get() = instance!!
     }
 
     internal val config = PocketConfig(this)
@@ -64,7 +66,7 @@ class Broadcaster : JavaPlugin() {
         logger.info("Loaded " + BroadcastingThread.messages.size + " messages.")
 
         // register command
-        PocketCommand.register(this, BrcCommand(this))
+        PocketCommand.register(this, BrcCommand())
 
         // check soft dependencies
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

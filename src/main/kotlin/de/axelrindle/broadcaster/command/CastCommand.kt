@@ -1,6 +1,6 @@
 package de.axelrindle.broadcaster.command
 
-import de.axelrindle.broadcaster.Broadcaster
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.broadcaster.util.Formatter
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
@@ -12,9 +12,7 @@ import org.bukkit.command.CommandSender
 /**
  * Enables a user to manually cast a message.
  */
-class CastCommand(
-        private val plugin: Broadcaster
-) : PocketCommand() {
+class CastCommand : PocketCommand() {
 
     override fun getName(): String {
         return "cast"
@@ -33,7 +31,7 @@ class CastCommand(
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
-        val msg = Formatter.format(plugin, args.joinToString(" "))
+        val msg = Formatter.format(args.joinToString(" "))
         val config = plugin.config.access("config")!!
         val prefix = formatColors(config.getString("Cast.Prefix")!!)
         val needsPermission = config.getBoolean("Cast.NeedPermissionToSee")

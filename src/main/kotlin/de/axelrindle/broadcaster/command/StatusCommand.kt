@@ -2,6 +2,7 @@ package de.axelrindle.broadcaster.command
 
 import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.PocketInventory
 import de.axelrindle.pocketknife.util.InventoryUtils.makeStack
@@ -18,9 +19,7 @@ import org.bukkit.inventory.Inventory
 /**
  * Display some status information about the plugin, e.g. thread status and version.
  */
-class StatusCommand(
-        private val plugin: Broadcaster
-) : PocketCommand() {
+class StatusCommand : PocketCommand() {
 
     private val title = plugin.localization.localize("Words.Status")!!
     private val pocketInventory = PocketInventory(plugin, title, 3)

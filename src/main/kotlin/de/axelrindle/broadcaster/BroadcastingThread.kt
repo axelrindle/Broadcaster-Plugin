@@ -26,9 +26,6 @@ import java.util.stream.Collectors
  */
 object BroadcastingThread {
 
-    private val plugin: Broadcaster
-        get() = Broadcaster.instance!!
-
     private var id: Int = 0
     private var index = 0
     private var lastRandomIndex: Int = 0
@@ -101,7 +98,7 @@ object BroadcastingThread {
 
             // further actions depend on the message type
             if (theMessage is SimpleMessage) {
-                val message = Formatter.format(plugin, theMessage.getText())
+                val message = Formatter.format(theMessage.getText())
 
                 // check for center alignment
                 if (message.startsWith("%c")) {
@@ -186,7 +183,7 @@ object BroadcastingThread {
         @EventHandler
         fun onPlayerJoin(event: PlayerJoinEvent) {
             if (paused) {
-                Broadcaster.instance!!.logger.info("Broadcasting resumed.")
+                plugin.logger.info("Broadcasting resumed.")
                 start()
             }
         }
@@ -197,11 +194,11 @@ object BroadcastingThread {
          */
         @EventHandler
         fun onPlayerQuit(event: PlayerQuitEvent) {
-            val pauseOnEmpty = Broadcaster.instance!!.config.access("config")!!
+            val pauseOnEmpty = plugin.config.access("config")!!
                     .getBoolean("Cast.PauseOnEmptyServer")
             val onlinePlayers = Bukkit.getOnlinePlayers().size - 1
             if (pauseOnEmpty && onlinePlayers <= 0) {
-                Broadcaster.instance!!.logger.info("Broadcasting paused.")
+                plugin.logger.info("Broadcasting paused.")
                 stop(true)
             }
         }

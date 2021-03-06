@@ -1,6 +1,7 @@
 package de.axelrindle.broadcaster.util
 
 import de.axelrindle.broadcaster.Broadcaster
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import me.clip.placeholderapi.PlaceholderAPI
 import org.apache.commons.lang.StringUtils
@@ -24,7 +25,7 @@ object Formatter {
      * @see JavaPlugin.getConfig
      */
     @Suppress("UNCHECKED_CAST")
-    fun format(plugin: Broadcaster, msg: String): String {
+    fun format(msg: String): String {
         var message = msg
 
         // format placeholders
@@ -38,7 +39,7 @@ object Formatter {
         message = formatPredefinedPlaceholders(message)
 
         // format using PlaceholderAPI
-        if (Broadcaster.instance!!.hasPluginPlaceholderApi) {
+        if (plugin.hasPluginPlaceholderApi) {
             message = PlaceholderAPI.setPlaceholders(null, message)
         }
 

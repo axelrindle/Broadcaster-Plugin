@@ -1,7 +1,7 @@
 package de.axelrindle.broadcaster.command
 
-import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.command.Command
@@ -12,9 +12,7 @@ import org.bukkit.command.CommandSender
  *
  * @see BroadcastingThread
  */
-class StartCommand(
-        private val plugin: Broadcaster
-) : PocketCommand() {
+class StartCommand : PocketCommand() {
 
     override fun getName(): String {
         return "start"

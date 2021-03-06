@@ -1,7 +1,7 @@
 package de.axelrindle.broadcaster.command
 
-import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
+import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.PocketCommand
 import de.axelrindle.pocketknife.util.sendMessageF
 import org.bukkit.Bukkit
@@ -12,9 +12,7 @@ import java.io.IOException
 /**
  * Reloads the plugin configuration from disk.
  */
-class ReloadCommand(
-        private val plugin: Broadcaster
-) : PocketCommand() {
+class ReloadCommand : PocketCommand() {
 
     override fun getName(): String {
         return "reload"
