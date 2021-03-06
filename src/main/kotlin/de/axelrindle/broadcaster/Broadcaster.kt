@@ -6,14 +6,27 @@ import de.axelrindle.pocketknife.PocketConfig
 import de.axelrindle.pocketknife.PocketLang
 import org.apache.commons.io.IOUtils
 import org.bukkit.Bukkit
+import org.bukkit.plugin.PluginDescriptionFile
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.plugin.java.JavaPluginLoader
 import java.io.*
 import java.nio.charset.StandardCharsets
 
 /**
  * The main plugin class. Does initialization and config loading.
  */
-class Broadcaster : JavaPlugin() {
+class Broadcaster : JavaPlugin {
+
+    constructor() : super()
+
+    // Required for mocking
+    constructor(loader: JavaPluginLoader, description: PluginDescriptionFile, dataFolder: File, file: File?) :
+        super(
+            loader,
+            description,
+            dataFolder,
+            file ?: File(Broadcaster::class.java.protectionDomain.codeSource.location.path)
+        )
 
     companion object {
         const val CHAT_PREFIX = "&2Broadcaster &f> &r"
