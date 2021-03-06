@@ -9,3 +9,4 @@ commands:
   brc:
     description: Control's the Plugin
     usage: /brc
+    permission: broadcaster.brc

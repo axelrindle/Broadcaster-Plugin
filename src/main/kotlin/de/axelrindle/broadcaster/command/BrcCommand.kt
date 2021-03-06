@@ -37,7 +37,7 @@ class BrcCommand : PocketCommand() {
         val helpText = plugin.localization.localize("Words.Help")!!
         sender.sendMessageF(CHAT_PREFIX + helpText)
         var i = 0
-        if (sender.hasPermission("broadcaster.brc")) {
+        if (testPermission(sender)) {
             sender.sendMessageF("&9/${getName()} &f- &3${getDescription()}")
             i++
         }
