@@ -7,6 +7,7 @@ Starting: "&6Trying to start the Broadcast..."
 ReloadStopped: "&cBroadcast stopped because of reload!"
 NoPermission: "&cYou don't have permission to do that!"
 Arguments: "&cToo few arguments!"
+NoMessagesLoaded: "&cNo messages have been loaded!"
 
 Words:
   Help: "Help"

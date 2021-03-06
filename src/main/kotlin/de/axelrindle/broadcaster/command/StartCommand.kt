@@ -31,11 +31,11 @@ class StartCommand : PocketCommand() {
     }
 
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
-        if (!BroadcastingThread.running) {
+        try {
             BroadcastingThread.start()
             sender.sendMessageF(plugin.localization.localize("Started")!!)
-        } else {
-            sender.sendMessageF(plugin.localization.localize("AlreadyRunning")!!)
+        } catch (e: RuntimeException) {
+            sender.sendMessageF(plugin.localization.localize(e.message!!)!!)
         }
         return true
     }

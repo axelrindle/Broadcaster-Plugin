@@ -130,7 +130,10 @@ class Broadcaster : JavaPlugin() {
     }
 
     override fun onDisable() {
-        BroadcastingThread.stop()
-        logger.info("Shutdown complete.")
+        try {
+            BroadcastingThread.stop()
+        } catch (e: RuntimeException) {
+            // ignore
+        }
     }
 }

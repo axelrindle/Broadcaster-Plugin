@@ -1,6 +1,5 @@
 package de.axelrindle.broadcaster.command
 
-import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.BroadcastingThread
 import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.PocketCommand
@@ -34,12 +33,12 @@ class StopCommand : PocketCommand() {
     override fun handle(sender: CommandSender, command: Command, args: Array<out String>): Boolean {
         val pause = args.isNotEmpty() && args[0] == "pause"
 
-        if (BroadcastingThread.running) {
+        try {
             BroadcastingThread.stop(pause)
             val key = if (pause) "Paused" else "Stopped"
             sender.sendMessageF(plugin.localization.localize(key)!!)
-        } else {
-            sender.sendMessageF(plugin.localization.localize("AlreadyStopped")!!)
+        } catch (e: RuntimeException) {
+            sender.sendMessageF(plugin.localization.localize(e.message!!)!!)
         }
         return true
     }

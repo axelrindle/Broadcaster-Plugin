@@ -26,12 +26,13 @@ import java.util.stream.Collectors
  */
 object BroadcastingThread {
 
-    private var id: Int = 0
+    private var id: Int = -1
     private var index = 0
     private var lastRandomIndex: Int = 0
 
-    internal var running = false
-        private set
+    internal val running: Boolean
+        get() = id != -1
+
     internal var paused = false
     internal var messages: List<Message> = emptyList()
         private set
@@ -55,7 +56,8 @@ object BroadcastingThread {
      * Starts the scheduled message broadcast.
      */
     fun start() {
-        if (running) return
+        if (running) throw RuntimeException("AlreadyRunning")
+        if (messages.isEmpty()) throw RuntimeException("NoMessagesLoaded")
         paused = false
 
         // config options
@@ -66,7 +68,6 @@ object BroadcastingThread {
                 interval * 20L,
                 interval * 20L // 20L is one "Tick" (Minecraft Second) in Minecraft. To calculate the period, we need to multiply the interval seconds with the length of one Tick.
         )
-        if (id != -1) running = true
     }
 
     /**
@@ -75,8 +76,10 @@ object BroadcastingThread {
      * @param pause Whether to pause instead of stopping. Pausing will not reset the message index.
      */
     fun stop(pause: Boolean = false) {
+        if (! running) throw RuntimeException("AlreadyStopped")
+
         Bukkit.getScheduler().cancelTask(id)
-        running = false
+        id = -1
         if (pause)
             paused = true
         else
