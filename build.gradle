@@ -1,5 +1,6 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.3.31"
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 group = 'de.axelrindle'
@@ -36,10 +37,6 @@ processResources {
     }
 }
 
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
-
 task copyToServer(type: Copy) {
     def dir = System.getenv("PLUGINS_DIR")
     if (dir == null) return true
@@ -50,6 +47,16 @@ task copyToServer(type: Copy) {
     into dir
 }
 
-assemble {
+shadowJar {
+    archiveClassifier.set('')
+
     finalizedBy copyToServer
 }
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+task relocateShadowJar(type: ConfigureShadowRelocation) {
+    target = tasks.shadowJar
+    prefix = "broadcastershadow"
+}
+
+tasks.shadowJar.dependsOn tasks.relocateShadowJar
