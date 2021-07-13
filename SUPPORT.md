@@ -13,6 +13,7 @@ Note that this document always applies to the **latest commit**. For support of 
 
 | Spigot Version | Supported |
 | ------- | ------------------ |
+| 1.17.x   | :construction::large_orange_diamond: |
 | 1.16.x   | :heavy_check_mark: |
 | 1.15.x   | :heavy_check_mark: |
 | 1.14.x   | :heavy_check_mark: |
