@@ -27,8 +27,7 @@ configurations {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version_kotlin"
-    implementation 'com.github.axelrindle:PocketKnife:2.1.0'
+    implementation 'com.github.axelrindle:PocketKnife:2.2.0'
 
     // APIs
     compileOnly "org.spigotmc:spigot-api:$version_spigot"
