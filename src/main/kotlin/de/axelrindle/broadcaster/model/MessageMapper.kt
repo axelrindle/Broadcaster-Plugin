@@ -41,7 +41,7 @@ object MessageMapper {
             plugin.logger.warning("Invalid message definition found! ($entry)")
         }
 
-        val type = entry["Type"].toString().toUpperCase(Locale.ENGLISH)
+        val type = entry["Type"].toString().uppercase(Locale.ENGLISH)
         val definitionFile = entry["Definition"].toString()
 
         // check for supported message type
