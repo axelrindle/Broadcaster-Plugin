@@ -28,6 +28,7 @@ configurations {
 
 dependencies {
     implementation 'com.github.axelrindle:PocketKnife:2.2.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
 
     // APIs
     compileOnly "org.spigotmc:spigot-api:$version_spigot"
