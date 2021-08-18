@@ -51,7 +51,9 @@ processResources {
 
 task copyToServer(type: Copy) {
     def dir = System.getenv("PLUGINS_DIR")
-    if (dir == null) return true
+    onlyIf {
+        dir != null
+    }
 
     from("build/libs") {
         include "${project.name}-${project.version}.jar"
