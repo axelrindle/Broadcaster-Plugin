@@ -32,12 +32,15 @@ dependencies {
     // APIs
     compileOnly "org.spigotmc:spigot-api:$version_spigot"
     compileOnly 'me.clip:placeholderapi:2.10.3'
+    compileOnly ("com.github.MilkBowl:VaultAPI:1.7") {
+        exclude group: "org.bukkit", module: "bukkit"
+    }
 
     // Tests
     testImplementation "io.kotest:kotest-runner-junit5-jvm:$version_kotest"
     testImplementation "io.kotest:kotest-assertions-core-jvm:$version_kotest"
     testImplementation group: "org.slf4j", name: "slf4j-simple", version: "1.7.25"
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.16:0.31.0'
+    testImplementation "com.github.seeseemelk:MockBukkit-v1.16:1.0.0"
 }
 
 processResources {
