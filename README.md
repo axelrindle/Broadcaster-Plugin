@@ -9,6 +9,9 @@
     <a href="https://www.codacy.com/app/axelrindle/Broadcaster-Plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=axelrindle/Broadcaster-Plugin&amp;utm_campaign=Badge_Grade">
         <img src="https://api.codacy.com/project/badge/Grade/7a35936d4add49e8b636c9a2140e8561" alt="Codacy Bade">
     </a>
+    <a href="https://www.codacy.com/gh/axelrindle/Broadcaster-Plugin/dashboard?utm_source=github.com&utm_medium=referral&utm_content=axelrindle/Broadcaster-Plugin&utm_campaign=Badge_Coverage">
+        <img src="https://app.codacy.com/project/badge/Coverage/7a35936d4add49e8b636c9a2140e8561">
+    </a>
     <a href="https://gitlocalize.com/repo/5025/whole_project?utm_source=badge">
         <img src="https://gitlocalize.com/repo/5025/whole_project/badge.svg" alt="gitlocalize">
     </a>
