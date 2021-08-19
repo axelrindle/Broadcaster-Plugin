@@ -1,6 +1,5 @@
 package de.axelrindle.broadcaster.util
 
-import de.axelrindle.broadcaster.Broadcaster
 import de.axelrindle.broadcaster.plugin
 import de.axelrindle.pocketknife.util.ChatUtils.formatColors
 import me.clip.placeholderapi.PlaceholderAPI
@@ -17,12 +16,10 @@ object Formatter {
     /**
      * Formats a message according to used placeholders and color codes.
      *
-     * @param plugin The [Broadcaster] instance to get config values from.
      * @param msg The message to format.
      *
      * @return A formatted message.
      * @see ChatColor.translateAlternateColorCodes
-     * @see JavaPlugin.getConfig
      */
     @Suppress("UNCHECKED_CAST")
     fun format(msg: String): String {
